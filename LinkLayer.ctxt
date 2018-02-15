@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.params=server
+comment0.target=LinkLayer(boolean)
+comment1.params=payload
+comment1.target=void\ send(byte[])
+comment2.params=
+comment2.target=byte[]\ receive()
+numComments=3

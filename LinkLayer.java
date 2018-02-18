@@ -1,20 +1,16 @@
-public class LinkLayer
-{
-    private PhysicalLayer physicalLayer;
+public class LinkLayer {
+  private PhysicalLayer physicalLayer;
 
-    public LinkLayer(boolean server, int addr)
-    {
-        physicalLayer = new PhysicalLayer(server, addr);
-    }
+  public LinkLayer(boolean server, int addr) {
+    physicalLayer = new PhysicalLayer(server, addr);
+  }
 
-    public void send(byte[] payload)
-    {
-        physicalLayer.send( payload );
-    }
+  public void send(byte[] payload) {
+    physicalLayer.send(payload);
+  }
 
-    public byte[] receive()
-    {
-        byte[] payload = physicalLayer.receive();
-        return payload;
-    }
+  public byte[] receive() {
+    byte[] payload = physicalLayer.receive();
+    return payload;
+  }
 }

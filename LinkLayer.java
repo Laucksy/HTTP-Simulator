@@ -2,9 +2,9 @@ public class LinkLayer
 {
     private PhysicalLayer physicalLayer;
 
-    public LinkLayer(boolean server)
+    public LinkLayer(boolean server, int addr)
     {
-        physicalLayer = new PhysicalLayer(server);
+        physicalLayer = new PhysicalLayer(server, addr);
     }
 
     public void send(byte[] payload)

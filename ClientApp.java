@@ -8,8 +8,11 @@ public class ClientApp
 
     public static void main(String[] args) throws Exception
     {
-        //create a new transport layer for client (hence false) (connect to server), and read in first line from keyboard
-        TransportLayer transportLayer = new TransportLayer(false);
+        
+        //create a new transport layer for client (hence false) 
+        //(connect to server), and read in first line from keyboard
+        
+        TransportLayer transportLayer = new TransportLayer(false, TransportLayer.PROXY_LISTENING_PORT);
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         String line = reader.readLine();
 

@@ -7,12 +7,13 @@ public class ServerApp
 
     public static void main(String[] args) throws Exception
     {
-        //create a new transport layer for server (hence true) (wait for client)
-        TransportLayer transportLayer = new TransportLayer(true);
+        //create a new transport layer for server (hence true) with server adddress
+        TransportLayer transportLayer = new TransportLayer(true,TransportLayer.WEB_LISTENING_PORT);
         while( true )
         {
             //receive message from client, and send the "received" message back.
             byte[] byteArray = transportLayer.receive();
+            
             //if client disconnected
             if(byteArray==null)
                 break;

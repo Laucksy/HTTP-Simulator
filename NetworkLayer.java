@@ -4,9 +4,9 @@ public class NetworkLayer
 
     private LinkLayer linkLayer;
 
-    public NetworkLayer(boolean server)
+    public NetworkLayer(boolean server, int addr)
     {
-        linkLayer = new LinkLayer(server);
+        linkLayer = new LinkLayer(server, addr);
 
     }
     public void send(byte[] payload)

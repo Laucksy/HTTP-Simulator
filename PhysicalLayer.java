@@ -9,8 +9,7 @@ import java.net.Socket;
 // A class that simulates the physical layer. In real life we are using a TCP socket
 public class PhysicalLayer
 {
-    //port that server will be listening on on localhost.
-    private static final int LISTENING_PORT = 8888;
+
     //the server socket
     ServerSocket serverSocket;
     //the connection socket after the connection is established
@@ -20,15 +19,15 @@ public class PhysicalLayer
     //stream to read in data from socket
     InputStream inputStream;
 
-    public PhysicalLayer(boolean server)
+    public PhysicalLayer(boolean server, int addr)
     {
         //if this is a server
         if(server)
         {
             try
             {
-                //create socket
-                serverSocket = new ServerSocket( LISTENING_PORT );
+                //create socket with correct port number
+                serverSocket = new ServerSocket( addr );
                 //accept connetcion from client
                 connectionSocket=serverSocket.accept();
                 //create an outputstream for writing data
@@ -42,8 +41,8 @@ public class PhysicalLayer
         {
             try
             {
-                //create socket
-                senderSocket = new Socket("localhost", LISTENING_PORT);
+                //create socket with correct port number
+                senderSocket = new Socket("localhost", addr);
                 //create an outputstream for writing data
                 socketOut = new DataOutputStream(senderSocket.getOutputStream());
                 //create an inputstream for reading data

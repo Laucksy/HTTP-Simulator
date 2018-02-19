@@ -27,7 +27,9 @@ public class PhysicalLayer {
         socketOut = new DataOutputStream(connectionSocket.getOutputStream());
         //create an inputstream for reading data
         inputStream = connectionSocket.getInputStream();
-      } catch (IOException e) {}
+      } catch (IOException e) {
+        System.out.println(e);
+      }
     }
     else {
       try {
@@ -35,7 +37,7 @@ public class PhysicalLayer {
         senderSocket = new Socket("localhost", addr);
         //create an outputstream for writing data
         socketOut = new DataOutputStream(senderSocket.getOutputStream());
-        //create an inputstream for reading data
+	//create an inputstream for reading data
         inputStream = senderSocket.getInputStream();
       } catch (IOException e) {
         //will run if server was not listening
@@ -49,7 +51,9 @@ public class PhysicalLayer {
     try {
       //send bytes out to socket
       socketOut.write(payload);
-    } catch(Exception ex) {}
+    } catch(Exception ex) {
+      System.out.println(ex);
+    }
   }
 
   //read bytes from socket
@@ -62,7 +66,9 @@ public class PhysicalLayer {
         bytesRecieved = new byte[numBytes];
         System.arraycopy(bytes, 0, bytesRecieved, 0, numBytes);
       }
-    } catch (IOException e) {}
+    } catch (IOException e) {
+      System.out.println(e);
+    }
     return bytesRecieved;
   }
 }

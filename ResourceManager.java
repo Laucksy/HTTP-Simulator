@@ -1,7 +1,8 @@
 import java.util.HashMap;
 import java.util.Deque;
 import java.util.ArrayList;
-import java.uril.Date.*;
+import java.util.ArrayDeque;
+import java.sql.Timestamp;
 
 enum ResourceType
 {
@@ -20,16 +21,21 @@ public class ResourceManager
     {
         private String uri;
         private ResourceType type;
+        
+        private String response() {
+            return "";
+        }
     }
+    
     private class Resource
     {
-        private Request request;
-        private boolean requested;
-        private boolean loaded;
-        private Timestamp requestedDate;
-        private Timestamp loadedDate;
+        protected Request request;
+        protected boolean requested;
+        protected boolean loaded;
+        protected Timestamp requestedDate;
+        protected Timestamp loadedDate;
         
-        private ArrayList<Request> getDependencies() {
+        public ArrayList<Request> getDependencies() {
             return new ArrayList();
         }
     }
@@ -37,11 +43,20 @@ public class ResourceManager
     private class CLMLResource extends Resource
     {
         // Overwrite methods
+        @Override
+        public ArrayList<Request> getDependencies() {
+            
+            return new ArrayList();
+        }
     }
     
     private class IMGResource extends Resource
     {
         // Overwrite methods
+        @Override
+        public ArrayList<Request> getDependencies() {
+            return new ArrayList();
+        }
     }
     
     private ArrayList<Resource> resources = new ArrayList<Resource>();    
@@ -54,6 +69,7 @@ public class ResourceManager
     public void loadResource(String uri, ResourceType type)
     {
         Resource result = new Resource();
+        
         // Make requests to load dependencies
         requests.addAll(result.getDependencies());
     }

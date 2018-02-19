@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.regex.*;
 
 /**
  * CLMLParser - Parses and displays the CLML files
@@ -5,25 +8,17 @@
  */
 public class CLMLParser
 {
-    // instance variables - replace the example below with your own
-    private int x;
+    private ArrayList<String> links;
+    private ArrayList<String> images;
+    private Matcher m;
 
     /**
      * Constructor for objects of class CLMLParser
      */
-    public CLMLParser()
+    public CLMLParser(String doc)
     {
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public int sampleMethod(int y)
-    {
-        // put your code here
-        return x + y;
+         Pattern resourcePattern = Pattern.compile("\\*\\*\\*[a-zA-Z]+\\s[a-zA-Z]+\\s[a-zA-Z]*\\s\\*\\*\\*");
+         m = resourcePattern.matcher(doc);
+         System.out.println(m);
     }
 }

@@ -3,6 +3,7 @@ public class Segment {
   private int _source;
   private int _destination;
   private int _sequenceNumber;
+  private int _ackNumber;
 
   public Segment (int source, int destination, int sequenceNumber) { 
     // SYN, FIN, ACK flags are not set initially
@@ -11,6 +12,16 @@ public class Segment {
     _source = source;
     _destination = destination;
     _sequenceNumber = sequenceNumber;
+  }
+
+  public Segment (int source, int destination, int sequenceNumber, int ackNumber) { 
+    // SYN, FIN, ACK flags are not set initially
+    flags = new int[]{0, 0, 0};
+
+    _source = source;
+    _destination = destination;
+    _sequenceNumber = sequenceNumber;
+    _ackNumber = ackNumber;
   }
 
   public int source () {
@@ -76,15 +87,6 @@ public class Segment {
     segment[14] = (byte)(_destination & 0xFF); 
     segment[15] = (byte)((_destination >> 8) & 0xFF);
     
-    System.out.println("Source: " + _source);
-    System.out.println("Destination: " + _destination);
-    System.out.println("Sequence Number: " + _sequenceNumber);
-
-
-    System.out.println(segment[12]);
-    System.out.println(segment[13]);
-    System.out.println(segment[14]);
-    System.out.println(segment[15]);
 
     // Sequence number
     segment[16] = (byte)(_sequenceNumber & 0xFF); 
@@ -94,6 +96,13 @@ public class Segment {
 
     for (int i = 20; i < segment.length; i++) {
       segment[i] = 0;
+    }
+
+    if (_ackNumber != null) {
+      segment[20] = (byte)(_ackNumber & 0xFF); 
+      segment[21] = (byte)((_ackNumber >> 8) & 0xFF); 
+      segment[22] = (byte)((_ackNumber >> 16) & 0xFF); 
+      segment[23] = (byte)((_ackNumber >> 24) & 0xFF); 
     }
 
     return segment;

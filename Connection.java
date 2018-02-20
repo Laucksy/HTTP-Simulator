@@ -18,6 +18,7 @@ public class Connection {
   }
 
   public void connect () {
+    System.out.println("Setting up TCP Connection");
     transportLayer.connect();
   }
 

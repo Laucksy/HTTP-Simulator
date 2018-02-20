@@ -20,6 +20,8 @@ public class TransportLayer {
     Segment segment = new Segment(0, WEB_LISTENING_PORT, rand.nextInt(10000));
     segment.setSYN();
     segment.format();
+    System.out.println("Sending TCP segment to network Layer");
+    networkLayer.send(segment.format());
   }
 
   public void close() {
@@ -32,6 +34,7 @@ public class TransportLayer {
 
   public byte[] receive() {
     byte[] payload = networkLayer.receive();
+    System.out.println(payload);
     return payload;
   }
 }

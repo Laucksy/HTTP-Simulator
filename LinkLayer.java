@@ -5,6 +5,10 @@ public class LinkLayer {
     physicalLayer = new PhysicalLayer(server, addr);
   }
 
+  public void close() {
+    physicalLayer.close();
+  }
+
   public void send(byte[] payload) {
     physicalLayer.send(payload);
   }

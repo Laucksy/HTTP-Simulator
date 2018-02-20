@@ -9,6 +9,10 @@ public class NetworkLayer {
     linkLayer = new LinkLayer(server, addr);
   }
 
+  public void close() {
+    linkLayer.close();
+  }
+
   public void send(byte[] payload) {
     try {
       TimeUnit.MILLISECONDS.sleep(TRANSMISSION_DELAY_RATE * payload.length);

@@ -21,35 +21,36 @@ public class ResourceManager
     {
         private String uri;
         private ResourceType type;
-        
+
         private String response() {
             return "";
         }
     }
-    
+
     private class Resource
     {
         protected Request request;
+        protected String file;
         protected boolean requested;
         protected boolean loaded;
         protected Timestamp requestedDate;
         protected Timestamp loadedDate;
-        
+
         public ArrayList<Request> getDependencies() {
             return new ArrayList();
         }
     }
-    
+
     private class CLMLResource extends Resource
     {
         // Overwrite methods
         @Override
         public ArrayList<Request> getDependencies() {
-            
+
             return new ArrayList();
         }
     }
-    
+
     private class IMGResource extends Resource
     {
         // Overwrite methods
@@ -58,8 +59,8 @@ public class ResourceManager
             return new ArrayList();
         }
     }
-    
-    private ArrayList<Resource> resources = new ArrayList<Resource>();    
+
+    private ArrayList<Resource> resources = new ArrayList<Resource>();
     private Deque<Request> requests = new ArrayDeque<Request>();
 
     public ResourceManager() {
@@ -68,7 +69,7 @@ public class ResourceManager
     public void loadResource(String uri, ResourceType type)
     {
         Resource result = new Resource();
-        
+
         // Make requests to load dependencies
         requests.addAll(result.getDependencies());
     }

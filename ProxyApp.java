@@ -14,10 +14,12 @@ public class ProxyApp {
       byte[] byteArray = transportLayer.receive();
       if(byteArray == null)
           break;
+	    System.out.println("From Client: " + byteArray);
       //send line to server
       transportLayer2.send(byteArray);
       //recieve line from server and forward to client
       byteArray = transportLayer2.receive();
+      System.out.println("From Server: " + byteArray);
       transportLayer.send(byteArray);
     }
   }

@@ -1,2 +1,5 @@
 *.class
 .vscode
+*.ctxt
+package.bluej
+.DS_Store

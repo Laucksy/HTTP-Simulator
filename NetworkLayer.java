@@ -11,15 +11,17 @@ public class NetworkLayer {
 
   public void send(byte[] payload) {
     try {
-      TimeUnit.SECONDS.sleep(TRANSMISSION_DELAY_RATE * payload.length);
-    } catch(InterruptedException e) {}
+      TimeUnit.MILLISECONDS.sleep(TRANSMISSION_DELAY_RATE * payload.length);
+    } catch(InterruptedException e) {
+      System.out.println(e);
+    }
     linkLayer.send(payload);
   }
 
   public byte[] receive() {
     byte[] payload = linkLayer.receive();
     try {
-      TimeUnit.SECONDS.sleep(PROPAGATION_DELAY);
+      TimeUnit.MILLISECONDS.sleep(PROPAGATION_DELAY);
     } catch(InterruptedException e) {}
     return payload;
   }

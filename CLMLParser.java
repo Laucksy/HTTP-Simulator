@@ -12,6 +12,12 @@ public class CLMLParser
     private ArrayList<String> images;
     private Matcher m;
 
+    public static void main (String[] args) {
+        String content = Helper.instance().read(args[0]);
+        
+        CLMLParser parser = new CLMLParser(content);
+    }
+
     /**
      * Constructor for objects of class CLMLParser
      */

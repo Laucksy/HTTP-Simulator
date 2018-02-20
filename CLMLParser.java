@@ -10,7 +10,6 @@ public class CLMLParser
 {
     private ArrayList<String> links;
     private ArrayList<String> images;
-    private Matcher m;
 
     public static void main (String[] args) {
         String content = Helper.instance().read(args[0]);
@@ -24,7 +23,7 @@ public class CLMLParser
     public CLMLParser(String doc)
     {
          Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +([^ ]+ +)?\\*{3}");
-         m = resourcePattern.matcher(doc);
+         Matcher m = resourcePattern.matcher(doc);
          
          while (m.find()) {
              System.out.println("\u001B[33m ===================== \u001B[0m\n");

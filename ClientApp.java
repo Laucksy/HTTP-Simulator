@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 
 //This class represents the client application
 public class ClientApp {
+
   public static void main(String[] args) throws Exception {
     //create a new transport layer for client (hence false)
     //(connect to server), and read in first line from keyboard
@@ -23,4 +24,5 @@ public class ClientApp {
       line = reader.readLine();
     }
   }
+  
 }

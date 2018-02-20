@@ -62,8 +62,7 @@ public class ResourceManager
     private ArrayList<Resource> resources = new ArrayList<Resource>();    
     private Deque<Request> requests = new ArrayDeque<Request>();
 
-    public ResourceManager()
-    {
+    public ResourceManager() {
     }
 
     public void loadResource(String uri, ResourceType type)

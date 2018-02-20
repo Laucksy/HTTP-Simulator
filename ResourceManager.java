@@ -17,6 +17,20 @@ enum ResourceType
 
 public class ResourceManager
 {
+    private ArrayList<Resource> resources = new ArrayList<Resource>();
+    private Deque<Request> requests = new ArrayDeque<Request>();
+
+    public ResourceManager() {
+
+    }
+
+    public void loadResource(String uri, ResourceType type) {
+        Resource result = new Resource();
+
+        // Make requests to load dependencies
+        requests.addAll(result.getDependencies());
+    }
+    
     private class Request
     {
         private String uri;
@@ -60,17 +74,5 @@ public class ResourceManager
         }
     }
 
-    private ArrayList<Resource> resources = new ArrayList<Resource>();
-    private Deque<Request> requests = new ArrayDeque<Request>();
-
-    public ResourceManager() {
-    }
-
-    public void loadResource(String uri, ResourceType type)
-    {
-        Resource result = new Resource();
-
-        // Make requests to load dependencies
-        requests.addAll(result.getDependencies());
-    }
+    
 }

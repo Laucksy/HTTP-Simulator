@@ -17,8 +17,12 @@ public class Connection {
     transportLayer.close();
   }
 
+  public void connect () {
+    TCP tcp = new TCP(0, port, 0);
+  }
+
   public void send(String message) {
-    System.out.println("Connection send," + message);
+    System.out.println("Connection send: \n -------------- \n" + message);
     byte[] byteArray = message.getBytes();
     transportLayer.send(byteArray);
   }

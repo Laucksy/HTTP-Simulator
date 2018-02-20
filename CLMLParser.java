@@ -23,7 +23,7 @@ public class CLMLParser
      */
     public CLMLParser(String doc)
     {
-         Pattern resourcePattern = Pattern.compile("\\*{3} +(.+) +(.+) +(.+ +)?\\*{3}");
+         Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +([^ ]+ +)?\\*{3}");
          m = resourcePattern.matcher(doc);
          
          while (m.find()) {

@@ -21,12 +21,7 @@ public class PhysicalLayer {
       try {
         //create socket with correct port number
         serverSocket = new ServerSocket(addr);
-        //accept connetcion from client
-        connectionSocket=serverSocket.accept();
-        //create an outputstream for writing data
-        socketOut = new DataOutputStream(connectionSocket.getOutputStream());
-        //create an inputstream for reading data
-        inputStream = connectionSocket.getInputStream();
+        reset();
       } catch (IOException e) {
         System.out.println(e);
       }
@@ -35,15 +30,44 @@ public class PhysicalLayer {
       try {
         //create socket with correct port number
         senderSocket = new Socket("localhost", addr);
-        //create an outputstream for writing data
-        socketOut = new DataOutputStream(senderSocket.getOutputStream());
-	//create an inputstream for reading data
-        inputStream = senderSocket.getInputStream();
+        reset();
       } catch (IOException e) {
         //will run if server was not listening
         System.out.println("Cannot Connect to server");
         System.exit(1);
       }
+    }
+  }
+
+  public void reset() {
+    try {
+      if (serverSocket != null) {
+        //accept connetcion from client
+        connectionSocket=serverSocket.accept();
+        //create an outputstream for writing data
+        socketOut = new DataOutputStream(connectionSocket.getOutputStream());
+        //create an inputstream for reading data
+        inputStream = connectionSocket.getInputStream();
+      } else {
+        //create an outputstream for writing data
+        socketOut = new DataOutputStream(senderSocket.getOutputStream());
+        //create an inputstream for reading data
+        inputStream = senderSocket.getInputStream();
+      }
+    } catch(IOException e) {
+      System.out.println(e);
+    }
+  }
+
+  public void close() {
+    try {
+      if (serverSocket != null) serverSocket.close();
+      if (connectionSocket != null) connectionSocket.close();
+      if (senderSocket != null) senderSocket.close();
+      socketOut = null;
+      inputStream = null;
+    } catch(IOException e) {
+      System.out.println(e);
     }
   }
 
@@ -65,6 +89,9 @@ public class PhysicalLayer {
       if (numBytes > 0) {
         bytesRecieved = new byte[numBytes];
         System.arraycopy(bytes, 0, bytesRecieved, 0, numBytes);
+      } else {
+        reset();
+        return receive();
       }
     } catch (IOException e) {
       System.out.println(e);

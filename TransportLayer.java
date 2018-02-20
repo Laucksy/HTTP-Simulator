@@ -12,6 +12,10 @@ public class TransportLayer {
     networkLayer = new NetworkLayer(server, addr);
   }
 
+  public void close() {
+    networkLayer.close();
+  }
+
   public void send(byte[] payload) {
     networkLayer.send(payload);
   }

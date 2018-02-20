@@ -18,7 +18,7 @@ public class Connection {
   }
 
   public void connect () {
-    TCP tcp = new TCP(0, port, 0);
+    transportLayer.connect();
   }
 
   public void send(String message) {

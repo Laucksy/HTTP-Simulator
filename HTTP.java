@@ -16,6 +16,7 @@ public class HTTP {
     request += "Host: localhost:" + port + "\n";
     request += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
 
+    connection.connect();
     connection.send(request);
     String response = connection.receive();
 

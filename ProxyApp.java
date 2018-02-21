@@ -11,7 +11,6 @@ public class ProxyApp {
     // TransportLayer transportLayer2 = new TransportLayer(false, TransportLayer.WEB_LISTENING_PORT);
 
     while(true) {
-      System.out.println("while loop");
       //get line from client
       byte[] byteArray = transportLayer.receive();
       if(byteArray == null) {

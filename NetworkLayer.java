@@ -31,7 +31,7 @@ public class NetworkLayer {
       e.printStackTrace();
     }
 
-    // System.out.println("Just received some data");
+    System.out.println("Just received some data size: " + payload.length);
     return payload;
   }
 }

@@ -25,6 +25,33 @@ public class Segment {
     this.ackNumber = ackNumber;
   }
 
+  public Segment (byte[] segment) {
+    int a, b, c, d;
+
+    a = segment[13] >= 0 ? segment[13] : 256 + segment[13];
+    b = segment[12] >= 0 ? segment[12] : 256 + segment[12];
+    source = b | (a << 8);
+
+    a = segment[15] >= 0 ? segment[15] : 256 + segment[15];
+    b = segment[14] >= 0 ? segment[14] : 256 + segment[14];
+    destination = b | (a << 8);
+ 
+    // Sequence number
+    a = segment[19] >= 0 ? segment[19] : 256 + segment[19];
+    b = segment[18] >= 0 ? segment[18] : 256 + segment[18];
+    c = segment[17] >= 0 ? segment[17] : 256 + segment[17];
+    d = segment[16] >= 0 ? segment[16] : 256 + segment[16];
+    sequenceNumber = d | ((c | ((b | (a << 8)) << 8)) << 8);
+
+    // ACK number
+    a = segment[23] >= 0 ? segment[23] : 256 + segment[23];
+    b = segment[22] >= 0 ? segment[22] : 256 + segment[22];
+    c = segment[21] >= 0 ? segment[21] : 256 + segment[21];
+    d = segment[20] >= 0 ? segment[20] : 256 + segment[20];
+    ackNumber = d | ((c | ((b | (a << 8)) << 8)) << 8);
+
+  }
+
   public int source () {
     return this.source;
   }
@@ -107,6 +134,19 @@ public class Segment {
     }
 
     return segment;
+  }
+
+  public String toString () {
+    String content = "";
+
+    content = "Source Port: "       + source          + '\n' +
+              "Destination Port:"   + destination     + '\n' +
+              "Sequence Number:"    + sequenceNumber  + '\n' +
+              "ACK Number:"         + ackNumber       + '\n' +
+              "Flags:"  + "\tSYN: " + flags[0] + "\tFIN: " + flags[1] + "\tACK: " + flags[2];
+
+
+    return content;
   }
 
 }

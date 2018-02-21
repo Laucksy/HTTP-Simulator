@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public final class Helper {
@@ -13,20 +14,22 @@ public final class Helper {
 
   public String read (String url) {
     String content = "";
-    
+
     try {
       File file = new File(url);
       Scanner sc = new Scanner(file);
-  
+
       while (sc.hasNextLine()) {
         content += sc.nextLine() + '\n';
       }
 
       sc.close();
+    } catch (FileNotFoundException e) {
+      return "Not Found";
     } catch (Exception e) {
       e.printStackTrace();
     }
-    
+
     return content;
   }
 

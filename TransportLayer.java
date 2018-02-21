@@ -29,12 +29,13 @@ public class TransportLayer {
   }
 
   public void send(byte[] payload) {
+    System.out.println("SENDING DATA");
     networkLayer.send(payload);
   }
 
   public byte[] receive() {
     byte[] payload = networkLayer.receive();
-    System.out.println(payload);
+    // System.out.println(payload);
     return payload;
   }
 }

@@ -19,7 +19,7 @@ public class NetworkLayer {
     } catch(InterruptedException e) {
       System.out.println(e);
     }
-    System.out.println("Just sent some data");
+    // System.out.println("Just sent some data");
     linkLayer.send(payload);
   }
 
@@ -31,7 +31,7 @@ public class NetworkLayer {
       e.printStackTrace();
     }
 
-    System.out.println("Just received some data");
+    // System.out.println("Just received some data");
     return payload;
   }
 }

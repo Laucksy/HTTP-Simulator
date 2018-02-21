@@ -13,7 +13,7 @@ public class CLMLParser
 
     public static void main (String[] args) {
         String content = Helper.instance().read(args[0]);
-        
+
         CLMLParser parser = new CLMLParser(content);
     }
 
@@ -24,7 +24,7 @@ public class CLMLParser
     {
          Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +([^ ]+ +)?\\*{3}");
          Matcher m = resourcePattern.matcher(doc);
-         
+
          while (m.find()) {
              System.out.println("\u001B[33m ===================== \u001B[0m\n");
              System.out.println("\u001B[31m Type: " + m.group(1) + "\u001B[0m");
@@ -33,7 +33,7 @@ public class CLMLParser
                 System.out.println("\u001B[32m Title: " + m.group(3) + "\u001B[0m");
 
          }
-         
+
          System.out.println("\n\u001B[32m---------- Parsing is done ----------\u001B[0m");
     }
 }

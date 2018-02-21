@@ -26,6 +26,8 @@ public class Segment {
   }
 
   public Segment (byte[] segment) {
+    // SYN, FIN, ACK flags are not set initially
+    flags = new int[]{0, 0, 0};
     int a, b, c, d;
 
     a = segment[13] >= 0 ? segment[13] : 256 + segment[13];
@@ -49,6 +51,11 @@ public class Segment {
     c = segment[21] >= 0 ? segment[21] : 256 + segment[21];
     d = segment[20] >= 0 ? segment[20] : 256 + segment[20];
     ackNumber = d | ((c | ((b | (a << 8)) << 8)) << 8);
+
+    flags[0] = (segment[25] >> 0) & 1;
+    flags[1] = (segment[25] >> 2) & 1;
+    flags[2] = (segment[25] >> 5) & 1;
+
 
   }
 
@@ -86,6 +93,18 @@ public class Segment {
 
   public void unsetACK () {
     flags[2] = 0;
+  }
+
+  public int syn () {
+    return flags[0];
+  }
+
+  public int fin () {
+    return flags[1];
+  }
+
+  public int ack () {
+    return flags[2];
   }
 
 
@@ -132,6 +151,8 @@ public class Segment {
       segment[22] = (byte)((ackNumber >> 16) & 0xFF);
       segment[23] = (byte)((ackNumber >> 24) & 0xFF);
     }
+
+    segment[25] = (byte)(flags[2] * 16 + flags[1] * 2 + flags[0]);
 
     return segment;
   }

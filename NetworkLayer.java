@@ -25,13 +25,14 @@ public class NetworkLayer {
 
   public byte[] receive() {
     byte[] payload = linkLayer.receive();
+
+    System.out.println("Network Layer received " + payload.length + " bytes");
+    
     try {
       TimeUnit.MILLISECONDS.sleep(PROPAGATION_DELAY);
     } catch(InterruptedException e) {
       e.printStackTrace();
     }
-
-    System.out.println("Just received some data size: " + payload.length);
     return payload;
   }
 }

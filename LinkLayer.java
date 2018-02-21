@@ -15,6 +15,7 @@ public class LinkLayer {
 
   public byte[] receive() {
     byte[] payload = physicalLayer.receive();
+    System.out.println("Link Layer received " + payload.length + " bytes");
     return payload;
   }
 }

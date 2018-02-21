@@ -6,7 +6,6 @@ public class HTTP {
   }
 
   public String get(String version, String uri, int port) {
-    System.out.println(connection == null);
     if (connection != null) System.out.println(connection.getPort());
     if (connection == null || connection.getPort() != port) {
       connection = new Connection(port);
@@ -17,7 +16,7 @@ public class HTTP {
     request += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
 
     connection.connect();
-    connection.receive();
+    // connection.receive();
 
 
     // connection.send(request);

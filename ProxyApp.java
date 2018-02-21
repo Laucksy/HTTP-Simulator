@@ -10,6 +10,7 @@ public class ProxyApp {
     //open a client connection to the server (hence false), on the correct port
     // TransportLayer transportLayer2 = new TransportLayer(false, TransportLayer.WEB_LISTENING_PORT);
 
+
     while(true) {
       //get line from client
       byte[] byteArray = transportLayer.receive();
@@ -17,10 +18,10 @@ public class ProxyApp {
         TimeUnit.MILLISECONDS.sleep(250);
         continue;
       }
-	    System.out.println("From Client: " + byteArray);
-      //send line to server
+
       HTTP http = new HTTP();
       String response = http.get("1.0", "test", 8888);
+
       System.out.println(response);
 
       System.out.println("From Server: " + response);

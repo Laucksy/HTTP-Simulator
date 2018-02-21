@@ -87,10 +87,11 @@ public class PhysicalLayer {
     try {
       byte[] bytes = new byte[1024];
       int numBytes = inputStream.read(bytes);
+
       if (numBytes > 0) {
         bytesRecieved = new byte[numBytes];
         System.arraycopy(bytes, 0, bytesRecieved, 0, numBytes);
-        System.out.println("Physical Layer received: " + bytesRecieved.length + " bytes, numBytes: " + numBytes);
+        System.out.println("Physical Layer received: " + numBytes + " bytes");
       } else {
         reset();
         return receive();

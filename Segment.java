@@ -53,8 +53,8 @@ public class Segment {
     ackNumber = d | ((c | ((b | (a << 8)) << 8)) << 8);
 
     flags[0] = (segment[25] >> 0) & 1;
-    flags[1] = (segment[25] >> 2) & 1;
-    flags[2] = (segment[25] >> 5) & 1;
+    flags[1] = (segment[25] >> 1) & 1;
+    flags[2] = (segment[25] >> 2) & 1;
 
 
   }
@@ -152,7 +152,7 @@ public class Segment {
       segment[23] = (byte)((ackNumber >> 24) & 0xFF);
     }
 
-    segment[25] = (byte)(flags[2] * 16 + flags[1] * 2 + flags[0]);
+    segment[25] = (byte)(flags[2] * 4 + flags[1] * 2 + flags[0]);
 
     return segment;
   }

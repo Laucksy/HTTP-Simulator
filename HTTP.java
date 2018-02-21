@@ -16,12 +16,9 @@ public class HTTP {
     request += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
 
     connection.connect();
-    // connection.receive();
 
-
-    // connection.send(request);
-    // String response = connection.receive();
-    String response = "";
+    connection.send(request);
+    String response = connection.receive();
 
     if (version != "1.1") {
       connection.close();

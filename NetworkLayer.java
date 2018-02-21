@@ -19,7 +19,7 @@ public class NetworkLayer {
     } catch(InterruptedException e) {
       System.out.println(e);
     }
-    // System.out.println("Just sent some data");
+    
     linkLayer.send(payload);
   }
 
@@ -27,7 +27,7 @@ public class NetworkLayer {
     byte[] payload = linkLayer.receive();
 
     System.out.println("Network Layer received " + payload.length + " bytes");
-    
+
     try {
       TimeUnit.MILLISECONDS.sleep(PROPAGATION_DELAY);
     } catch(InterruptedException e) {

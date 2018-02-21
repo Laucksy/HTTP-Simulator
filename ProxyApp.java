@@ -19,13 +19,16 @@ public class ProxyApp {
         continue;
       }
 
-      HTTP http = new HTTP();
-      String response = http.get("1.0", "test", 8888);
+      System.out.println("Received Data: \n");
+      System.out.println(new String(byteArray));
 
-      System.out.println(response);
+      // HTTP http = new HTTP();
+      // String response = http.get("1.0", "test", 8888);
 
-      System.out.println("From Server: " + response);
-      transportLayer.send(response.getBytes());
+      // System.out.println(response);
+
+      // System.out.println("From Server: " + response);
+      // transportLayer.send(response.getBytes());
     }
   }
 }

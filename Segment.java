@@ -1,39 +1,40 @@
 public class Segment {
   private int[] flags;
-  private int _source;
-  private int _destination;
-  private int _sequenceNumber;
-  private int _ackNumber;
+  private int source;
+  private int destination;
+  private int sequenceNumber;
+  private int ackNumber;
 
-  public Segment (int source, int destination, int sequenceNumber) { 
+  public Segment (int source, int destination, int sequenceNumber) {
     // SYN, FIN, ACK flags are not set initially
     flags = new int[]{0, 0, 0};
 
-    _source = source;
-    _destination = destination;
-    _sequenceNumber = sequenceNumber;
+    this.source = source;
+    this.destination = destination;
+    this.sequenceNumber = sequenceNumber;
+    this.ackNumber = -1;
   }
 
-  public Segment (int source, int destination, int sequenceNumber, int ackNumber) { 
+  public Segment (int source, int destination, int sequenceNumber, int ackNumber) {
     // SYN, FIN, ACK flags are not set initially
     flags = new int[]{0, 0, 0};
 
-    _source = source;
-    _destination = destination;
-    _sequenceNumber = sequenceNumber;
-    _ackNumber = ackNumber;
+    this.source = source;
+    this.destination = destination;
+    this.sequenceNumber = sequenceNumber;
+    this.ackNumber = ackNumber;
   }
 
   public int source () {
-    return _source;
+    return this.source;
   }
 
   public int destination () {
-    return _destination;
+    return this.destination;
   }
 
   public int sequenceNumber () {
-    return _sequenceNumber;
+    return this.sequenceNumber;
   }
 
   public void setSYN () {
@@ -45,7 +46,7 @@ public class Segment {
   }
 
   public void setFIN () {
-    flags[0] = 1;
+    flags[1] = 1;
   }
 
   public void unsetFIN () {
@@ -80,29 +81,29 @@ public class Segment {
     segment[8] = segment[9] = segment[10] = segment[11] = 0;
 
     // Source Port
-    segment[12] = (byte)(_source & 0xFF); 
-    segment[13] = (byte)((_source >> 8) & 0xFF);
+    segment[12] = (byte)(source & 0xFF);
+    segment[13] = (byte)((source >> 8) & 0xFF);
 
     // Destination Port
-    segment[14] = (byte)(_destination & 0xFF); 
-    segment[15] = (byte)((_destination >> 8) & 0xFF);
-    
+    segment[14] = (byte)(destination & 0xFF);
+    segment[15] = (byte)((destination >> 8) & 0xFF);
+
 
     // Sequence number
-    segment[16] = (byte)(_sequenceNumber & 0xFF); 
-    segment[17] = (byte)((_sequenceNumber >> 8) & 0xFF); 
-    segment[18] = (byte)((_sequenceNumber >> 16) & 0xFF); 
-    segment[19] = (byte)((_sequenceNumber >> 24) & 0xFF); 
+    segment[16] = (byte)(sequenceNumber & 0xFF);
+    segment[17] = (byte)((sequenceNumber >> 8) & 0xFF);
+    segment[18] = (byte)((sequenceNumber >> 16) & 0xFF);
+    segment[19] = (byte)((sequenceNumber >> 24) & 0xFF);
 
     for (int i = 20; i < segment.length; i++) {
       segment[i] = 0;
     }
 
-    if (_ackNumber != null) {
-      segment[20] = (byte)(_ackNumber & 0xFF); 
-      segment[21] = (byte)((_ackNumber >> 8) & 0xFF); 
-      segment[22] = (byte)((_ackNumber >> 16) & 0xFF); 
-      segment[23] = (byte)((_ackNumber >> 24) & 0xFF); 
+    if (ackNumber != -1) {
+      segment[20] = (byte)(ackNumber & 0xFF);
+      segment[21] = (byte)((ackNumber >> 8) & 0xFF);
+      segment[22] = (byte)((ackNumber >> 16) & 0xFF);
+      segment[23] = (byte)((ackNumber >> 24) & 0xFF);
     }
 
     return segment;

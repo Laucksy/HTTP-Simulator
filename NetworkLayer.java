@@ -1,8 +1,8 @@
 import java.util.concurrent.TimeUnit;
 
 public class NetworkLayer {
-  private final long PROPAGATION_DELAY = 250;
-  private final long TRANSMISSION_DELAY_RATE = 10;
+  private final long PROPAGATION_DELAY = 100;
+  private final long TRANSMISSION_DELAY_RATE = 1;
   private LinkLayer linkLayer;
 
   public NetworkLayer(boolean server, int addr) {

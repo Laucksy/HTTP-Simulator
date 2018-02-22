@@ -5,7 +5,8 @@ public class Connection {
   private TransportLayer transportLayer;
   private int port;
 
-  public Connection(int port) {
+  public Connection(int p) {
+    port = p;
     transportLayer = new TransportLayer(false, port);
   }
 

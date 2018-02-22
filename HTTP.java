@@ -6,21 +6,23 @@ public class HTTP {
   }
 
   public String get(String version, String uri, int port) {
-    if (connection != null) System.out.println(connection.getPort());
+    // System.out.println(version + "," + uri + "," + port);
+    // System.out.println(connection != null ? connection.getPort() : "null");
+    // if (connection != null) System.out.println(connection.getPort());
     if (connection == null || connection.getPort() != port) {
       connection = new Connection(port);
+      connection.connect();
     }
 
     String request = "GET " + uri + " HTTP/" + version + "\n";
     request += "Host: localhost:" + port + "\n";
     request += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
 
-    connection.connect();
-
     connection.send(request);
     String response = connection.receive();
 
-    if (version != "1.1") {
+    if (!version.equals("1.1")) {
+      System.out.println("Closing TCP Connection");
       connection.close();
       connection = null;
     }

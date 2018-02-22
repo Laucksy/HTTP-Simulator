@@ -11,6 +11,7 @@ public class ProxyApp {
     // TransportLayer transportLayer2 = new TransportLayer(false, TransportLayer.WEB_LISTENING_PORT);
 
 
+    HTTP http = new HTTP();
     while(true) {
       //get line from client
       byte[] byteArray = transportLayer.receive();
@@ -25,7 +26,6 @@ public class ProxyApp {
       String version = str.substring(index, index + 3);
       String uri = str.substring(str.indexOf(" ") + 1, index - 6);
 
-      HTTP http = new HTTP();
       String response = http.get(version, uri, TransportLayer.WEB_LISTENING_PORT);
       System.out.println("Response: " + response);
       byteArray = response.getBytes();
@@ -38,7 +38,7 @@ public class ProxyApp {
 
       // System.out.println(response);
       // System.out.println("From Server: " + response);
-      transportLayer.send(response.getBytes());
+      // transportLayer.send(response.getBytes());
     }
   }
 

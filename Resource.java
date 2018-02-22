@@ -56,4 +56,8 @@ public class Resource
     public String toString() {
       return this.response.toString();
     }
+
+    public HTTP.HTTPResponse getResponse() {
+      return this.response;
+    }
 }

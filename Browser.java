@@ -124,6 +124,32 @@ public class Browser {
      System.out.println();
   }
 
+
+  /*
+    renderHome - 404 Page
+
+  */
+  public void render404() {
+    System.out.println();
+    System.out.println();
+    String picture = "\n"
+                      + "    _    _     ___     _    _        _       _\n"
+                      + "   |:|  |:|   /:::\\   |:|  |:|      |_ | |  |_\n"
+                      + "   |:|  |:|  /:/'\\:\\  |:|  |:|      |  | |_ |_\n"
+                      + "   |:|__|:| |:|   |:| |:|__|:|           _  ___\n"
+                      + "   |::::::| |:|   |:| |::::::|     |\\ | / \\  |\n"
+                      + "   '\"\"\"\"|:| |:|   |:| '\"\"\"\"|:|     | \\| \\_/  |\n"
+                      + "        |:| |:|   |:|      |:|   _  _            _\n"
+                      + "        |:| |:\\   |:|      |:|  |_ / \\ | | |\\ | | \\\n"
+                      + "        |:|  \\:\\_/:/       |:|  |  \\_/ \\_/ | \\| |_/\n"
+                      + "        |:|   \\:::/        |:|\n"
+                      + "        '\"'    '\"'         '\"'";
+
+     System.out.println(picture);
+     System.out.println();
+     System.out.println();
+  }
+
   public void renderUrl(String url) {
     Timer timer = new Timer();
 
@@ -131,13 +157,18 @@ public class Browser {
 
     timer.scheduleAtFixedRate(loader, /* initialDelay */ 0, /* interval */ 100);
 
-    Resource page = resourceManager.loadUrl(new Request(url, Resource.Type.CLML));
-    timer.cancel();
+    Resource resource = resourceManager.loadUrl(new Request(url, Resource.Type.CLML));
+    HTTP.HTTPResponse response = resource.getResponse();
 
+    // Finish loading
+    timer.cancel();
     loader.fillRest();
 
     System.out.println();
-    System.out.println(page);
+    if (response.status == 404)
+      render404();
+    else
+      System.out.println(resource);
   }
 
   class Loader extends TimerTask {

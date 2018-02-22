@@ -76,7 +76,7 @@ public class Browser {
       System.out.print(" " + pageTitle + " ");
       System.out.print("\u25E5");
       System.out.print("\u25E5");
-      for (int i = 0; i <= 60; i++) {
+      for (int i = 0; i <= (80 - pageTitle.length() - 4 - 5); i++) {
         System.out.print("\u2589");
       }
       System.out.println();
@@ -127,36 +127,36 @@ public class Browser {
   public void renderUrl(String url) {
     Timer timer = new Timer();
 
-    long now = System.currentTimeMillis();
-    long start = 0;
-    long end = 100;
-    
-    timer.scheduleAtFixedRate(new Loader(), start, end);
-    
+    Loader loader = new Loader();
+
+    timer.scheduleAtFixedRate(loader, /* initialDelay */ 0, /* interval */ 100);
+
     Resource page = resourceManager.loadUrl(new Request(url, Resource.Type.CLML));
     timer.cancel();
 
-    int diff = (int)(System.currentTimeMillis() - now) / (100 * 1000);
-    String tmp = "";
-    for (int i = diff; i < 80; i++) {
-      tmp += "=";
-    }
+    loader.fillRest();
 
-    System.out.print(ANSI_BLUE + tmp + ANSI_RESET + "\r");
     System.out.println();
     System.out.println(page);
   }
 
   class Loader extends TimerTask {
-    private String i = "";
+    int progress = 0;
+
     public Loader () {
       super();
     }
 
     @Override
     public void run() {
-      i += "=";
-      System.out.print(ANSI_BLUE + i + ANSI_RESET + "\r");
+      System.out.print(ANSI_BLUE + "=" + ANSI_RESET);
+      progress++;
+    }
+
+    public void fillRest() {
+      for (int i = progress; i < 80; i++) {
+        System.out.print(ANSI_BLUE + "=" + ANSI_RESET);
+      }
     }
   }
 }

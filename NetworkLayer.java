@@ -19,14 +19,14 @@ public class NetworkLayer {
     } catch(InterruptedException e) {
       System.out.println(e);
     }
-    
+
     linkLayer.send(payload);
   }
 
   public byte[] receive() {
     byte[] payload = linkLayer.receive();
 
-    System.out.println("Network Layer received " + payload.length + " bytes");
+    // System.out.println("Network Layer received " + payload.length + " bytes");
 
     try {
       TimeUnit.MILLISECONDS.sleep(PROPAGATION_DELAY);

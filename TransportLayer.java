@@ -1,6 +1,7 @@
 import java.util.Random;
 
 public class TransportLayer {
+  private static final boolean debug = false;
   //port that server will be listening on on localhost for webserver.
   public static final int WEB_LISTENING_PORT = 8888;
   //port that server will be listening on on localhost for proxy cache.
@@ -22,11 +23,12 @@ public class TransportLayer {
     segment = new Segment(0, WEB_LISTENING_PORT, rand.nextInt(10000));
     segment.setSYN();
 
-    System.out.println("\nSending TCP segment to network Layer:\n");
-    System.out.println(segment);
+    if (debug) System.out.println("\nSending TCP segment to network Layer:\n");
+    if (debug) System.out.println(segment);
 
     send(segment.format());
     receive();
+    System.out.println("TCP Connection Established");
   }
 
   public void close() {
@@ -34,7 +36,7 @@ public class TransportLayer {
   }
 
   public void send(byte[] payload) {
-    System.out.println("SENDING DATA");
+    if (debug) System.out.println("SENDING DATA");
 
     if (segment.ack() == 1 && segment.syn() == 0) {
 
@@ -45,7 +47,7 @@ public class TransportLayer {
         else data[i] = payload[i - 32];
       }
       networkLayer.send(data);
-      
+
     } else {
       networkLayer.send(payload);
     }
@@ -54,11 +56,11 @@ public class TransportLayer {
 
   public byte[] receive() {
     byte[] payload = networkLayer.receive();
-    
+
     byte[] header = new byte[32];
     byte[] data = new byte[payload.length - 32];
- 
-    System.out.println("Transport Layer received " + payload.length + " bytes");
+
+    if (debug) System.out.println("Transport Layer received " + payload.length + " bytes");
 
     int i = 0;
     for (; i < header.length; i++) {
@@ -72,16 +74,16 @@ public class TransportLayer {
 
     segment = new Segment(header);
 
-    System.out.println("\nReceived a packet with following TCP headers: \n");
-    System.out.println(segment);
+    if (debug) System.out.println("\nReceived a packet with following TCP headers: \n");
+    if (debug) System.out.println(segment);
 
     if (segment.syn() == 1 && segment.ack() == 0) {
       segment.setACK();
-      System.out.println("\nAbout to send modified segment\n");
-      System.out.println(segment);
-      System.out.println("\n");
+      if (debug) System.out.println("\nAbout to send modified segment\n");
+      if (debug) System.out.println(segment);
+      if (debug) System.out.println("\n");
       send(segment.format());
-      System.out.println("Sent modified segment");
+      if (debug) System.out.println("Sent modified segment");
       return receive();
     } else if (segment.syn() == 1 && segment.ack() == 1) {
       segment.unsetSYN();

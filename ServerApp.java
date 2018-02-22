@@ -17,34 +17,24 @@ public class ServerApp {
         continue;
       }
       String str = new String ( byteArray );
-      System.out.println("JUST RECEIVED" + str);
+      System.out.println("Request: " + str);
 
-      if (str.indexOf("HTTP") >= 0) {
-        String fileData = Helper.instance().read("website_example/" + str);
+      int index = str.indexOf("HTTP/") + 5;
+      String version = str.substring(index, index + 3);
+      String uri = str.substring(str.indexOf(" ") + 1, index - 6);
 
-        int code = fileData.equals("Not Found") ? 404 : 200;
-        String data = fileData.equals("Not Found") ? "" : fileData;
+      String fileData = Helper.instance().read("website_example/" + uri);
+      int code = fileData.equals("Not Found") ? 404 : 200;
+      String data = fileData.equals("Not Found") ? "" : fileData;
 
-        System.out.println("HEREEEE" + str);
-        int index = str.indexOf("HTTP/") + 5;
-        System.out.println(index);
-        System.out.println(str.substring(index, index + 3));
-        String response = createResponse(str.substring(index, index + 3), code, data);
-        System.out.println("SENDING RESPONSE" + response);
-
-        //String line = "received";
-        byteArray = response.getBytes();
-        transportLayer.send(byteArray);
-      } else {
-        String response = "ACK";
-        byteArray = response.getBytes();
-        transportLayer.send(byteArray);
-      }
+      String response = createResponse(version, code, data);
+      System.out.println("Response: " + response);
+      byteArray = response.getBytes();
+      transportLayer.send(byteArray);
     }
   }
 
   public static String createResponse(String version, int code, String data) {
-    System.out.println("createResponse" + version);
     String msg = "Ok";
     if (code == 404) msg = "Not Found";
     if (code == 304) msg = "Not Modified";

@@ -9,7 +9,7 @@ public class ClientApp {
     //(connect to server), and read in first line from keyboard
 
     HTTP http = new HTTP();
-    String response = http.get("1.0", "test", 8889);
+    String response = http.get("1.0", "animals.clht", TransportLayer.PROXY_LISTENING_PORT);
     System.out.println(response);
   }
 
@@ -29,4 +29,4 @@ public class ClientApp {
   //     line = reader.readLine();
   //   }
   // }
-} 
+}

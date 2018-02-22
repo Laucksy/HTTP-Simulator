@@ -74,7 +74,7 @@ public class PhysicalLayer {
   public void send(byte[] payload) {
     try {
       //send bytes out to socket
-      System.out.println("Physical layer sending data: " + payload.length + " bytes");
+      // System.out.println("Physical layer sending data: " + payload.length + " bytes");
       socketOut.write(payload);
     } catch(Exception ex) {
       System.out.println(ex);
@@ -87,13 +87,13 @@ public class PhysicalLayer {
     try {
       byte[] bytes = new byte[1024];
       int numBytes = inputStream.read(bytes);
-      System.out.println(numBytes);
+      // System.out.println(numBytes);
 
       if (numBytes > 0) {
 
         bytesRecieved = new byte[numBytes];
         System.arraycopy(bytes, 0, bytesRecieved, 0, numBytes);
-        System.out.println("Physical Layer received: " + numBytes + " bytes");
+        // System.out.println("Physical Layer received: " + numBytes + " bytes");
       } else {
         reset();
         return receive();

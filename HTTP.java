@@ -6,6 +6,7 @@ public class HTTP {
   Connection connection;
 
   public class HTTPResponse {
+    public String version;
     public String data = "";
     public int status;
     public String statusText;
@@ -13,64 +14,28 @@ public class HTTP {
 
     public HTTPResponse(String raw) {
 
-      System.out.println("-------- Response: \n");
+      System.out.println("here it comes -------");
       System.out.println(raw);
-      System.out.println("-------- End of the raw");
 
-      Pattern resourcePattern = Pattern.compile(
-        "HTTP/(\\d.\\d) (\\d{3}) ([a-zA-Z]+)\nConnection: (.+)\nContent-Length: (\\d+)\nContent-Type: ([a-z]+/[a-z]+)([\\S\\s]+)"
-      );
-      Matcher m = resourcePattern.matcher(raw);
+      headers = new HashMap<>();
+      String tmp = "";
+      Pattern general = Pattern.compile("HTTP/(\\d.\\d) (\\d{3}) ([a-zA-Z]+)\\n((.+:.+\\s*)+)([\\S\\s]+)");
+      Pattern header = Pattern.compile("((.+):\\s*(.+)\\s*)");
+      
+      Matcher m = general.matcher(raw);
       m.find();
 
-      String version = m.group(1);
-      String statusCode = m.group(2);
-      String statusMessage = m.group(3);
-      String connection = m.group(4);
-      String contentLength = m.group(5);
-      String contentType = m.group(6);
-      String content = m.group(7);
+      version = m.group(1);
+      status = Integer.parseInt(m.group(2));
+      statusText = m.group(3);
+      tmp = m.group(4);
+      data = m.group(6);
 
+      m = header.matcher(tmp);
+      while (m.find()) {
+        headers.put(m.group(2), m.group(3));
+      }
 
-      System.out.println(
-        "version: " + version + "\n" + 
-        "statusCode: " + statusCode + "\n" + 
-        "statusMessage: " + statusMessage + "\n" +
-        "connection: " + connection + "\n" + 
-        "contentLength: " + contentLength + "\n" +
-        "contentType: " + contentType + "\n" +
-        "content: " + content + "---"
-      );
-
-      // Scanner sc = new Scanner(raw);
-
-      // Parse first line of the response
-      // try {
-      //   /* HTTP Version */ sc.next();
-      //   this.status = sc.nextInt();
-      //   this.statusText = sc.nextLine();
-
-      //   // Parse headers
-      //   this.headers = new HashMap();
-      //   while(sc.hasNextLine()) {
-      //     String line = sc.nextLine();
-      //     if (line.trim().equals("")) {
-      //       break;
-      //     }
-      //     String varval[] = line.split(":");
-      //     System.out.println(varval);
-      //     this.headers.put(varval[0].trim(), varval[1].trim());
-      //   }
-
-      //   // Get the rest of the response as the data
-      //   Pattern p = Pattern.compile("$", Pattern.MULTILINE);
-      //   if (this.status != 404)
-      //     this.data = sc.next(p);
-      // } catch (Exception e) {
-      //   this.status = 0;
-      //   this.statusText = e.toString();
-      //   this.headers = new HashMap();
-      // }
     }
 
     public String toString() {

@@ -1,39 +1,46 @@
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.regex.*;
+  import java.util.ArrayList;
+  import java.util.Scanner;
+  import java.util.regex.*;
 
-/**
- * CLMLParser - Parses and displays the CLML files
- *
- */
-public class CLMLParser
-{
-    private ArrayList<String> links;
-    private ArrayList<String> images;
+  /**
+   * CLMLParser - Parses and displays the CLML files
+   *
+   */
+  public class CLMLParser
+  {
+      public class Link {
+        String url;
+        String title;
 
-    public static void main (String[] args) {
-        String content = Helper.instance().read(args[0]);
+        public Link(String url, String title) {
+          this.url = url;
+          this.title = title;
+        }
+      }
 
-        CLMLParser parser = new CLMLParser(content);
-    }
+      public ArrayList<Link> links;
+      public ArrayList<String> images;
 
-    /**
-     * Constructor for objects of class CLMLParser
-     */
-    public CLMLParser(String doc)
-    {
-         Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +([^ ]+ +)?\\*{3}");
-         Matcher m = resourcePattern.matcher(doc);
+      /**
+       * Constructor for objects of class CLMLParser
+       */
+      public CLMLParser(String doc)
+      {
+          this.links = new ArrayList<Link>();
+          this.images = new ArrayList<String>();
 
-         while (m.find()) {
-             System.out.println("\u001B[33m ===================== \u001B[0m\n");
-             System.out.println("\u001B[31m Type: " + m.group(1) + "\u001B[0m");
-             System.out.println("\u001B[34m Source: " + m.group(2) + "\u001B[0m");
-             if(m.group(3) != null)
-                System.out.println("\u001B[32m Title: " + m.group(3) + "\u001B[0m");
+           Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +([^ ]+ +)?\\*{3}");
+           Matcher m = resourcePattern.matcher(doc);
 
-         }
-
-         System.out.println("\n\u001B[32m---------- Parsing is done ----------\u001B[0m");
-    }
-}
+            while (m.find()) {
+              switch (m.group(1)) {
+                case "img":
+                  images.add(m.group(2));
+                  break;
+                case "href":
+                  links.add(new Link(m.group(2), m.group(3)));
+                  break;
+              }
+            }
+      }
+  }

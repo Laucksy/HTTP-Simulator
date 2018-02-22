@@ -16,6 +16,8 @@ public class Resource
     protected Timestamp loadedDate;
     protected HTTP.HTTPResponse response;
 
+    private CLMLParser parser;
+
     public Resource(ResourceManager resourceManager, Request request) {
       this.request = request;
       this.resourceManager = resourceManager;
@@ -25,10 +27,13 @@ public class Resource
     public ArrayList<Request> getDependencies() {
         switch (this.request.type) {
           case CLML:
-            // use CLMLParser
-            // return this.
+            ArrayList<Request> dependencies = new ArrayList<Request>();
+            for (String image : parser.images) {
+              dependencies.add(new Request(image, Resource.Type.IMG));
+            }
+          default:
+            return new ArrayList<Request>();
         }
-        return new ArrayList();
     }
 
     public void load() {
@@ -41,6 +46,7 @@ public class Resource
       // http error handling
       this.loadedDate = new Timestamp(System.currentTimeMillis());
       this.loaded = true;
+      this.parser = new CLMLParser(this.response.data);
       ArrayList<Request> dependencies = this.getDependencies();
       for (Request dependencyRequest: dependencies) {
         resourceManager.loadUrl(dependencyRequest);

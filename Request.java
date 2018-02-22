@@ -1,15 +1,14 @@
 public class Request
 {
     public String url;
-    public ResourceType type;
+    public Resource.Type type;
 
-    public Request(String url, ResourceType type) {
+    public Request(String url, Resource.Type type) {
       this.url = url;
       this.type = type;
     }
 
-    public String execute() {
-        // String response = http.get("1.0", this.url, TransportLayer.WEB_LISTENING_PORT);
-        return "";
+    public String getUrl() {
+      return this.url;
     }
 }

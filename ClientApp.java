@@ -9,11 +9,11 @@ public class ClientApp {
     //(connect to server), and read in first line from keyboard
 
     HTTP http = new HTTP();
-    String response = http.get("1.1", "animals.clht", TransportLayer.PROXY_LISTENING_PORT);
-    System.out.println(response);
+    HTTP.HTTPResponse response = http.get("1.1", "animals.clht", TransportLayer.PROXY_LISTENING_PORT);
+    System.out.println(response.data);
 
     response = http.get("1.1", "cat.clht", TransportLayer.PROXY_LISTENING_PORT);
-    System.out.println(response);
+    System.out.println(response.data);
   }
 
   //   TransportLayer transportLayer = new TransportLayer(false, TransportLayer.PROXY_LISTENING_PORT);

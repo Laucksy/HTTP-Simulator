@@ -77,6 +77,7 @@ public class Browser {
       for (int i = 0; i <= 60; i++) {
         System.out.print("\u2589");
       }
+      System.out.println();
 
       if (url.equals("home"))
         renderHome();
@@ -122,7 +123,7 @@ public class Browser {
   }
 
   public void renderUrl(String url) {
-    Resource page = resourceManager.loadUrl(new Request(url, ResourceType.CLML));
+    Resource page = resourceManager.loadUrl(new Request(url, Resource.Type.CLML));
     System.out.println(page);
   }
 }

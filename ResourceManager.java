@@ -13,7 +13,7 @@ public class ResourceManager
     private ArrayList<Resource> resources = new ArrayList<Resource>();
 
     public ResourceManager() {
-      http = new HTTP();
+      this.http = new HTTP();
     }
 
     public Resource loadUrl(Request request) {
@@ -22,5 +22,9 @@ public class ResourceManager
         this.resources.add(resource);
         resource.load();
         return resource;
+    }
+
+    public HTTP httpClient() {
+      return this.http;
     }
 }

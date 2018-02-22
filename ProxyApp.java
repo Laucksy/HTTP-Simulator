@@ -26,9 +26,9 @@ public class ProxyApp {
       String version = str.substring(index, index + 3);
       String uri = str.substring(str.indexOf(" ") + 1, index - 6);
 
-      String response = http.get(version, uri, TransportLayer.WEB_LISTENING_PORT);
-      System.out.println("Response: " + response);
-      byteArray = response.getBytes();
+      HTTP.HTTPResponse response = http.get(version, uri, TransportLayer.WEB_LISTENING_PORT);
+      System.out.println("Response: " + response.data);
+      byteArray = response.data.getBytes();
       transportLayer.send(byteArray);
 
       // System.out.println("Received Data: \n");

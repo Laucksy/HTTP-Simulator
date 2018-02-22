@@ -44,6 +44,7 @@ public class ServerApp {
     //TODO: Add Date and Last-Modified
     response += "Content-Length: " + data.length() + "\n";
     response += "Content-Type: text/clht\n";
+    response += "\n";
     response += data;
 
     return response;

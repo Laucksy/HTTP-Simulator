@@ -3,13 +3,18 @@ import java.sql.Timestamp;
 
 public class Resource
 {
+    public enum Type
+    {
+        CLML, IMG, OTHER;
+    }
+
     protected ResourceManager resourceManager;
     protected Request request;
     protected String file;
     protected boolean loaded;
     protected Timestamp requestedDate;
     protected Timestamp loadedDate;
-    protected String response;
+    protected HTTP.HTTPResponse response;
 
     public Resource(ResourceManager resourceManager, Request request) {
       this.request = request;
@@ -27,7 +32,12 @@ public class Resource
     }
 
     public void load() {
-      this.response = this.request.execute();
+      this.response = this.resourceManager.httpClient()
+                        .get(
+                            /* http version */ "1.1",
+                            /* url */ this.request.getUrl(),
+                            /* port */ TransportLayer.PROXY_LISTENING_PORT
+                        );
       // http error handling
       this.loadedDate = new Timestamp(System.currentTimeMillis());
       this.loaded = true;
@@ -38,6 +48,6 @@ public class Resource
     }
 
     public String toString() {
-      return "";
+      return this.response.toString();
     }
 }

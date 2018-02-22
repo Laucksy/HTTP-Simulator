@@ -6,6 +6,7 @@ public class HTTP {
   Connection connection;
 
   public class HTTPResponse {
+    public String res;
     public String version;
     public String data = "";
     public int status;
@@ -13,9 +14,7 @@ public class HTTP {
     public HashMap<String, String> headers;
 
     public HTTPResponse(String raw) {
-
-      System.out.println("here it comes -------");
-      System.out.println(raw);
+      res = raw;
 
       headers = new HashMap<>();
       String tmp = "";
@@ -39,12 +38,12 @@ public class HTTP {
     }
 
     public String toString() {
-      String tostring = "Response : \n"
-                        + "Status : " + this.status + "\n"
-                        + "StatusText : " + this.statusText + "\n"
-                        + "Headers : " + this.headers + "\n"
-                        + "Data : " + this.data + "\n";
-      return tostring;
+      // String tostring = "Response : \n"
+      //                   + "Status : " + this.status + "\n"
+      //                   + "StatusText : " + this.statusText + "\n"
+      //                   + "Headers : " + this.headers + "\n"
+      //                   + "Data : " + this.data + "\n";
+      return this.data;
     }
   }
 

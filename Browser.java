@@ -1,4 +1,6 @@
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 //This class represents the client application
 public class Browser {
@@ -123,7 +125,38 @@ public class Browser {
   }
 
   public void renderUrl(String url) {
+    Timer timer = new Timer();
+
+    long now = System.currentTimeMillis();
+    long start = 0;
+    long end = 100;
+    
+    timer.scheduleAtFixedRate(new Loader(), start, end);
+    
     Resource page = resourceManager.loadUrl(new Request(url, Resource.Type.CLML));
+    timer.cancel();
+
+    int diff = (int)(System.currentTimeMillis() - now) / (100 * 1000);
+    String tmp = "";
+    for (int i = diff; i < 80; i++) {
+      tmp += "=";
+    }
+
+    System.out.print(ANSI_BLUE + tmp + ANSI_RESET + "\r");
+    System.out.println();
     System.out.println(page);
+  }
+
+  class Loader extends TimerTask {
+    private String i = "";
+    public Loader () {
+      super();
+    }
+
+    @Override
+    public void run() {
+      i += "=";
+      System.out.print(ANSI_BLUE + i + ANSI_RESET + "\r");
+    }
   }
 }

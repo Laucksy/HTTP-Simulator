@@ -23,7 +23,6 @@ public class Connection {
   }
 
   public void send(String message) {
-    System.out.println("Connection sent: \n -------------- \n" + message);
     byte[] byteArray = message.getBytes();
     transportLayer.send(byteArray);
   }

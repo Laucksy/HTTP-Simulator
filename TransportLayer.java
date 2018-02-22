@@ -19,16 +19,11 @@ public class TransportLayer {
   }
 
   public void connect () {
-    System.out.println("Opening TCP Connection: \n");
     segment = new Segment(0, WEB_LISTENING_PORT, rand.nextInt(10000));
     segment.setSYN();
 
-    if (debug) System.out.println("\nSending TCP segment to network Layer:\n");
-    if (debug) System.out.println(segment);
-
     send(segment.format());
     receive();
-    System.out.println("TCP Connection Established");
   }
 
   public void close() {
@@ -36,7 +31,6 @@ public class TransportLayer {
   }
 
   public void send(byte[] payload) {
-    if (debug) System.out.println("SENDING DATA");
 
     if (segment.ack() == 1 && segment.syn() == 0) {
 
@@ -60,8 +54,6 @@ public class TransportLayer {
     byte[] header = new byte[32];
     byte[] data = new byte[payload.length - 32];
 
-    if (debug) System.out.println("Transport Layer received " + payload.length + " bytes");
-
     int i = 0;
     for (; i < header.length; i++) {
       header[i] = payload[i];
@@ -74,16 +66,10 @@ public class TransportLayer {
 
     segment = new Segment(header);
 
-    if (debug) System.out.println("\nReceived a packet with following TCP headers: \n");
-    if (debug) System.out.println(segment);
-
     if (segment.syn() == 1 && segment.ack() == 0) {
       segment.setACK();
-      if (debug) System.out.println("\nAbout to send modified segment\n");
-      if (debug) System.out.println(segment);
-      if (debug) System.out.println("\n");
+      
       send(segment.format());
-      if (debug) System.out.println("Sent modified segment");
       return receive();
     } else if (segment.syn() == 1 && segment.ack() == 1) {
       segment.unsetSYN();

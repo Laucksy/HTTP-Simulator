@@ -20,19 +20,17 @@ public class ProxyApp {
         continue;
       }
       String str = new String ( byteArray );
-      System.out.println("Request: " + str);
 
       int index = str.indexOf("HTTP/") + 5;
       String version = str.substring(index, index + 3);
       String uri = str.substring(str.indexOf(" ") + 1, index - 6);
 
       HTTP.HTTPResponse response = http.get(version, uri, TransportLayer.WEB_LISTENING_PORT);
-      System.out.println("Response: " + response.data);
-      byteArray = response.data.getBytes();
+      byteArray = response.res.getBytes();
 
-      System.out.println("Byte array result");
-      System.out.println(new String(byteArray));
       transportLayer.send(byteArray);
+
+      
     }
   }
 
@@ -46,6 +44,7 @@ public class ProxyApp {
     //TODO: Add Date and Last-Modified
     response += "Content-Length: " + data.length() + "\n";
     response += "Content-Type: text/clht\n";
+    response += "\n";
     response += data;
 
     return response;

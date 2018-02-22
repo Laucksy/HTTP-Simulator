@@ -17,7 +17,6 @@ public class ServerApp {
         continue;
       }
       String str = new String ( byteArray );
-      System.out.println("Request: " + str);
 
       int index = str.indexOf("HTTP/") + 5;
       String version = str.substring(index, index + 3);
@@ -28,7 +27,6 @@ public class ServerApp {
       String data = fileData.equals("Not Found") ? "" : fileData;
 
       String response = createResponse(version, code, data);
-      System.out.println("Response: " + response);
       byteArray = response.getBytes();
       transportLayer.send(byteArray);
     }

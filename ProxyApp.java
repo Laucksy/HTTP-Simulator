@@ -30,15 +30,6 @@ public class ProxyApp {
       System.out.println("Response: " + response.data);
       byteArray = response.data.getBytes();
       transportLayer.send(byteArray);
-
-      // System.out.println("Received Data: \n");
-      // System.out.println(new String(byteArray));
-
-
-
-      // System.out.println(response);
-      // System.out.println("From Server: " + response);
-      // transportLayer.send(response.getBytes());
     }
   }
 

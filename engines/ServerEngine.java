@@ -36,10 +36,7 @@ public abstract class ServerEngine {
 
   public abstract void load (String version, String uri, byte[] byteArray);
 
-  public String createResponse(String version, int code, String type, String data, String uri, long ifModified) {
-    File file = new File("website_example/" + uri);
-
-    if (ifModified > file.lastModified()) code = 304;
+  public String createResponse(String version, int code, String type, String data, String uri, long lastModified) {
 
     String msg = "Ok";
     if (code == 404) msg = "Not Found";
@@ -48,7 +45,7 @@ public abstract class ServerEngine {
     String response = "HTTP/" + version + " " + code + " " + msg + "\n";
     response += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
     response += "Date: " + System.currentTimeMillis() + "\n";
-    response += "Last-Modified: " + file.lastModified() + "\n"; 
+    response += "Last-Modified: " + lastModified + "\n"; 
     response += "Content-Length: " + data.length() + "\n";
     response += "Content-Type: " + type + "\n";
     response += "\n";

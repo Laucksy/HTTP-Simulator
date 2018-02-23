@@ -5,8 +5,9 @@ import runners.ClientApp;
 import java.util.HashMap;
 
 /**
- * ResourceManager - holds a queue of resources to request and dispatches
- * requests to load them
+ * ResourceManager - holds a cache of loaded resources and all the information
+ * about them (url, data, request, etc.). Serves as the cache manager for both
+ * the proxy server and the client app
  *
  */
 
@@ -20,12 +21,19 @@ public class ResourceManager
       this.http = new HTTPEngine(trans, props);
     }
 
+    /*
+      loadURl - Loads a resource from the remote server
+
+      @param url the location of the object
+      @param port the port of the remote server
+    */
     private Resource loadUrl(String url, int port) {
         Resource resource = new Resource(this, url, port);
         if (ClientApp.DEBUG_MODE)
           System.out.println("Loading resource " + url);
         this.resources.put(url, resource);
         resource.load();
+        // We don't cache files that 404
         if (resource.getResponse().status == 404)
           this.resources.remove(url);
         if (ClientApp.DEBUG_MODE)

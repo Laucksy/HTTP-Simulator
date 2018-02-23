@@ -84,10 +84,12 @@ public abstract class ServerEngine {
     String data, String uri, long lastModified
   ) {
 
+    // Infer the status message from the status code
     String msg = "Ok";
     if (code == 404) msg = "Not Found";
     if (code == 304) msg = "Not Modified";
 
+    // Formulate the response based on the given parameters
     String response = "HTTP/" + version + " " + code + " " + msg + "\n";
     response += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
     response += "Date: " + System.currentTimeMillis() + "\n";
@@ -96,6 +98,7 @@ public abstract class ServerEngine {
     response += "Content-Type: " + type + "\n";
     response += "\n";
 
+    // Only send back the data if the file changed
     if (code != 304)
       response += data;
 

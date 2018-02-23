@@ -6,6 +6,13 @@ import helpers.Helper;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+/*
+  Connection - Abstraction on top of TCP  that establishes a connection with
+  the transport layer (regardless of the nature of the endsystem, being either
+  a server or a client or both)
+
+*/
+
 public class Connection {
   private TransportLayer transportLayer;
   private int port;

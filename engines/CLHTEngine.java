@@ -1,5 +1,7 @@
 package engines;
 
+import extra.ResourceManager;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
@@ -14,8 +16,8 @@ import javax.print.attribute.HashAttributeSet;
   public class CLHTEngine
   {
       public class Link {
-        String url;
-        String title;
+        public String url;
+        public String title;
 
         public Link(String url, String title) {
           this.url = url;

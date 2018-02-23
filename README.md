@@ -25,7 +25,7 @@
 
 > A simple HTTP web browser/web server implementation on top of a simulated network.
 
-## Running the simulation
+## Building the simulation
 
 Build the project using the included Makefile as follows :
 
@@ -45,6 +45,38 @@ $ make proxy
 
 ```bash
 $ make client
+```
+
+## Running the simulation
+
+The simulation runs in three different modes: browser mode, experiment mode and verbose mode.
+
+#### Browser mode
+
+Browser mode is the default mode for running the client. It provides a browser with
+rendering capabilities without showing any information about the network. To run the browser mode,
+type:
+
+```bash
+$ make client
+```
+
+#### Experiment mode
+
+In experiment mode, the client app adds the total time it took to render a page to the end of the screen.
+Run experiment mode through:
+
+```bash
+$ make experimentClient
+```
+
+#### Verbose mode
+
+In verbose mode, pages are not rendered. Instead, the browser will display the ongoing/outgoing HTTP requests
+and responses and the time each of them took. Run verbose mode using:
+
+```bash
+$ make verboseClient
 ```
 
 

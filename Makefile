@@ -12,3 +12,5 @@ client:
 	java runners.ClientApp
 verboseClient:
 	java runners.ClientApp debug
+experimentClient:
+	java runners.ClientApp experiment

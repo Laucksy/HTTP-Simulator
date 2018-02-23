@@ -60,6 +60,7 @@ import javax.print.attribute.HashAttributeSet;
 
         tmp.put("g", "hello there");
         tmp.put("c", "bye");
+        tmp.put("a", "hmm");
 
         for (int i = 0; i < links.size(); i++) {
           System.out.println(links.get(i).url);
@@ -67,9 +68,13 @@ import javax.print.attribute.HashAttributeSet;
 
 
         while (m.find()) {
-          System.out.println(m.group(1));
+          System.out.println(m.group(0));
+          copy = copy.replace(m.group(0), tmp.get(m.group(2).substring(0, 1)));
         }
+
        
-         return "";
+        System.out.println(copy);
+
+        return "";
       }
   }

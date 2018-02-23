@@ -3,6 +3,7 @@ package engines;
 import extra.ResourceManager;
 import extra.Resource;
 import runners.ClientApp;
+import layers.Browser;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -70,7 +71,7 @@ import javax.print.attribute.HashAttributeSet;
               if (findLink(numLinks - 1) == null) {
                 this.links.add(new Link(m.group(2), m.group(3)));
               }
-              renderString = renderString.replace(m.group(0), "[👉🏻 " + numLinks + "] " + m.group(3));
+              renderString = renderString.replace(m.group(0), Browser.ANSI_CYAN + "[👉🏻 " + numLinks + "] " + m.group(3) + Browser.ANSI_RESET);
               numLinks++;
               break;
           }

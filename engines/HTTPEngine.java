@@ -65,7 +65,7 @@ public class HTTPEngine {
     connection = null;
   }
 
-  public HTTPResponse get(String version, String uri, int port) {
+  public HTTPResponse get(String version, String uri, int port, long loadedDate) {
     if (connection == null || connection.getPort() != port) {
       connection = new Connection(port);
       connection.connect();
@@ -75,8 +75,12 @@ public class HTTPEngine {
     request += "Host: localhost:" + port + "\n";
     request += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
 
+    if (loadedDate != -1)
+      request += "If-Modified-Since: " + loadedDate + "\n";
+
     connection.send(request);
     HTTPResponse response = new HTTPResponse(connection.receive());
+
 
     if (!version.equals("1.1")) {
       connection.close();

@@ -34,7 +34,8 @@ public class Resource
                         .get(
                             /* http version */ "1.1",
                             /* url */ this.url,
-                            /* port */ this.port
+                            /* port */ this.port,
+                            -1
                         );
 
       this.loadedDate = System.currentTimeMillis();

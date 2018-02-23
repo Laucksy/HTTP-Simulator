@@ -36,11 +36,10 @@ public abstract class ServerEngine {
 
   public abstract void load (String version, String uri, byte[] byteArray);
 
-  public String createResponse(String version, int code, String type, String data, String uri) {
+  public String createResponse(String version, int code, String type, String data, String uri, long ifModified) {
     File file = new File("website_example/" + uri);
 
-    System.out.println("website_example/" + uri);
-    System.out.println(file.lastModified());
+    if (ifModified > file.lastModified()) code = 304;
 
     String msg = "Ok";
     if (code == 404) msg = "Not Found";
@@ -53,7 +52,9 @@ public abstract class ServerEngine {
     response += "Content-Length: " + data.length() + "\n";
     response += "Content-Type: " + type + "\n";
     response += "\n";
-    response += data;
+    
+    if (code != 304)
+      response += data;
 
     return response;
   }

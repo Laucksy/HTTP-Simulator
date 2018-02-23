@@ -37,6 +37,17 @@ public class ResourceManager
           if (ClientApp.DEBUG_MODE)
             System.out.println("Found locally cached resource " + url);
           Resource result = this.resources.get(url);
+
+          HTTPEngine.HTTPResponse res =  http.get("1.1", url, port, result.loadedDate);
+
+          if (res.status == 304) {
+            result.loadedDate = System.currentTimeMillis();
+          } else {
+            result.file = res.data;
+          }
+
+          // result.response = res;
+
           long end = System.currentTimeMillis();
           if (ClientApp.DEBUG_MODE)
             System.out.println("Took : " + (end - start) + " millis");

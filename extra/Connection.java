@@ -34,6 +34,7 @@ public class Connection {
 
   public String receive() {
     byte[] byteArray = transportLayer.receive();
+
     String str = new String(byteArray);
     return str;
   }

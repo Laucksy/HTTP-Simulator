@@ -9,10 +9,12 @@ import java.io.InputStreamReader;
 public class Connection {
   private TransportLayer transportLayer;
   private int port;
+  private boolean isServer;
 
-  public Connection(int p) {
-    port = p;
-    transportLayer = new TransportLayer(false, port);
+  public Connection(boolean isServer, int p) {
+    this.port = p;
+    this.transportLayer = new TransportLayer(isServer, port);
+    this.isServer = isServer;
   }
 
   public int getPort() {
@@ -25,6 +27,14 @@ public class Connection {
 
   public void connect () {
     transportLayer.connect();
+  }
+
+  public boolean isServer () {
+    return this.isServer;
+  }
+
+  public boolean isClient () {
+    return !this.isServer;
   }
 
   public void send(String message) {

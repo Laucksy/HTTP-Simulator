@@ -10,25 +10,21 @@ import helpers.Helper;
 import java.util.regex.*;
 
 public class Proxy extends ServerEngine {
-  HTTPEngine http;
   ResourceManager manager;
 
   public Proxy () {
     super(TransportLayer.PROXY_LISTENING_PORT);
 
-    http = new HTTPEngine();
     manager = new ResourceManager();
   }
 
-  public void load (String version, String uri, byte[] byteArray) {
+  public void load (String version, String uri, String raw) {
 
     Resource resource = manager.getCachedResource(uri, TransportLayer.WEB_LISTENING_PORT);
     HTTPEngine.HTTPResponse response = resource.getResponse();
 
     Pattern resourcePattern = Pattern.compile("If-Modified-Since: (\\d+)");
-    Matcher m = resourcePattern.matcher(new String(byteArray));
-
-
+    Matcher m = resourcePattern.matcher(raw);
 
     long ifModified = -1;
     while (m.find()) ifModified = Long.parseLong(m.group(1));
@@ -37,10 +33,24 @@ public class Proxy extends ServerEngine {
     String tmp = "";
 
     if (resource.loadedDate < ifModified) {
-      tmp = createResponse( response.version,  304, type, resource.file, uri, resource.loadedDate);
+      tmp = createResponse(
+          response.version,
+          304,
+          type,
+          resource.file,
+          uri,
+          resource.loadedDate
+      );
     } else {
-      tmp = createResponse( response.version,  200, type, resource.file, uri, resource.loadedDate);
+      tmp = createResponse(
+          response.version,
+          response.status == 304 ? 200 : response.status,
+          type,
+          resource.file,
+          uri,
+          resource.loadedDate
+      );
     }
-    transportLayer.send(tmp.getBytes());
+    http.send(tmp, this.port);
   }
 }

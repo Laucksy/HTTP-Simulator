@@ -66,8 +66,8 @@ public class HTTPEngine {
   }
 
   public HTTPResponse get(String version, String uri, int port, long loadedDate) {
-    if (connection == null || connection.getPort() != port) {
-      connection = new Connection(port);
+    if (connection == null || connection.getPort() != port || !connection.isClient()) {
+      connection = new Connection(/* isServer */ false, port);
       connection.connect();
     }
 
@@ -88,5 +88,21 @@ public class HTTPEngine {
     }
 
     return response;
+  }
+
+  public String listen(int port) {
+    if (connection == null || connection.getPort() != port || !connection.isServer()) {
+      connection = new Connection(/* isServer */ true, port);
+      connection.connect();
+    }
+    return connection.receive();
+  }
+
+  public void send(String data, int port) {
+    if (connection == null || connection.getPort() != port || !connection.isServer()) {
+      connection = new Connection(/* isServer */ true, port);
+      connection.connect();
+    }
+    connection.send(data);
   }
 }

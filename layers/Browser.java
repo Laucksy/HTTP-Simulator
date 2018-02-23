@@ -58,17 +58,23 @@ public class Browser {
   }
 
   public void promptForURL() {
-    System.out.println("Type URL or Hypertext Anchor ID to navigate: ");
-    System.out.print(" ");
     for (int i = 0; i <= 80; i++) {
-      System.out.print("_");
+      System.out.print("=");
     }
     System.out.println();
-    System.out.print("|");
+    System.out.println("Type URL or Hypertext Anchor ID to navigate: ");
+    System.out.print("/");
   }
 
   public void renderPage(String url) {
-      String pageTitle = url.equals("home") ? "New Tab" : url;
+      String pageTitle = "";
+
+      if (url.equals("home"))
+        pageTitle = "New Tab";
+      else if (url.matches("-?\\d+(\\.\\d+)?") && this.currentResource != null)
+        pageTitle = this.currentResource.findLink(Integer.parseInt(url) - 1);
+      else
+        pageTitle = url;
 
       // Clear screen
       System.out.print("\033[H\033[2J");

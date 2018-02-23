@@ -22,7 +22,7 @@ public class HTTPEngine {
 
       headers = new HashMap<>();
       String tmp = "";
-      Pattern general = Pattern.compile("HTTP/(\\d.\\d) (\\d{3}) ([a-zA-Z ]+)\\n((.+:.+\\s*)+)([\\S\\s]+)");
+      Pattern general = Pattern.compile("HTTP/(\\d.\\d) (\\d{3}) ([a-zA-Z ]+)\\n((.+:.+\\s*)+)\\n([\\S\\s]+)");
       Pattern header = Pattern.compile("((.+):\\s*(.+)\\s*)");
 
       Matcher m = general.matcher(raw);

@@ -55,15 +55,18 @@ import javax.print.attribute.HashAttributeSet;
         Matcher m = resourcePattern.matcher(doc);
         HashMap<String, String> tmp = new HashMap<String, String>();
 
-
+        int numLinks = 1;
         while (m.find()) {
           switch (m.group(1)) {
             case "img":
               renderString = renderString.replace(m.group(0), this.resourceManager.getCachedResource(m.group(2)).toString());
               break;
             case "href":
-              this.links.add(new Link(m.group(2), m.group(3)));
-              renderString = renderString.replace(m.group(0), "[👉🏻 " + this.links.size() + "] " + m.group(3));
+              if (findLink(numLinks - 1) == null) {
+                this.links.add(new Link(m.group(2), m.group(3)));
+              }
+              renderString = renderString.replace(m.group(0), "[👉🏻 " + numLinks + "] " + m.group(3));
+              numLinks++;
               break;
           }
         }

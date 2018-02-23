@@ -171,6 +171,7 @@ public class Browser {
 
     timer.scheduleAtFixedRate(loader, /* initialDelay */ 0, /* interval */ 100);
 
+    long start = System.currentTimeMillis();
     this.currentResource = resourceManager.getCachedResource(url);
     HTTPEngine.HTTPResponse response = this.currentResource.getResponse();
 
@@ -183,6 +184,11 @@ public class Browser {
       render404();
     else
       System.out.println(this.currentResource);
+
+    long end = System.currentTimeMillis();
+
+    if (ClientApp.EXPERIMENT_MODE || ClientApp.DEBUG_MODE)
+      System.out.println(ANSI_PURPLE + " -> Took Total : " + (end - start) + " millis" + ANSI_RESET);
   }
 
   class Loader extends TimerTask {

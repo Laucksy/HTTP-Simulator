@@ -1,15 +1,36 @@
-# HTTP-Simulator
-A simple HTTP web browser/web server implementation on top of a simulated network. Project 1 for Lafayette College CS305 Spring 2018.
+# Aperture Browser
+**Lafayette College CS305 Spring 2018.**
 
-------------------------------------------------------------------------
-This is the project README file. Here, you should describe your project.
-Tell the reader (someone who does not know anything about this project)
-all he/she needs to know. The comments should usually include at least:
-------------------------------------------------------------------------
+> A simple HTTP web browser/web server implementation on top of a simulated network.
 
-PROJECT TITLE:
-PURPOSE OF PROJECT:
-VERSION or DATE:
-HOW TO START THIS PROJECT:
-AUTHORS:
-USER INSTRUCTIONS:
+## Running the simulation
+
+Build the project using the included Makefile as follows :
+
+```bash
+$ make
+```
+
+then run the server application, the proxy application and the client application (in that order)
+
+```bash
+$ make server
+```
+
+```bash
+$ make proxy
+```
+
+```bash
+$ make client
+```
+
+
+## Authors
+
+- [Wassim Gharbi](https://github.com/wassgha)
+- [Zura Mestiashvili](https://github.com/prosperi)
+- [Erik Laucks](https://github.com/laucksy)
+
+## License
+Non-commercial, educational use only. Except with written authorization.

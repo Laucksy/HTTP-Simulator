@@ -7,7 +7,6 @@ import layers.TransportLayer;
 import runners.ClientApp;
 
 import java.util.ArrayList;
-import java.sql.Timestamp;
 
 public class Resource
 {
@@ -17,8 +16,8 @@ public class Resource
     protected String file;
     protected boolean loaded;
     protected int port;
-    protected Timestamp requestedDate;
-    protected Timestamp loadedDate;
+    protected long requestedDate;
+    protected long loadedDate;
     protected HTTPEngine.HTTPResponse response;
 
     private CLHTEngine clhtEngine;
@@ -26,7 +25,7 @@ public class Resource
     public Resource(ResourceManager resourceManager, String url, int port) {
       this.url = url;
       this.resourceManager = resourceManager;
-      this.requestedDate = new Timestamp(System.currentTimeMillis());
+      this.requestedDate = System.currentTimeMillis();
       this.port = port;
     }
 
@@ -38,7 +37,7 @@ public class Resource
                             /* port */ this.port
                         );
 
-      this.loadedDate = new Timestamp(System.currentTimeMillis());
+      this.loadedDate = System.currentTimeMillis();
       this.loaded = true;
 
       this.type = this.response.getHeader("Content-Type");

@@ -10,3 +10,5 @@ proxy:
 	java runners.ProxyApp
 client:
 	java runners.ClientApp
+verboseClient:
+	java runners.ClientApp debug

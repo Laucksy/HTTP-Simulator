@@ -1,6 +1,7 @@
 package engines;
 
 import extra.Connection;
+import runners.ClientApp;
 
 import java.util.HashMap;
 import java.util.Scanner;
@@ -10,7 +11,7 @@ public class HTTPEngine {
   Connection connection;
 
   public class HTTPResponse {
-    public String res;
+    public String raw;
     public String version;
     public String data = "";
     public int status;
@@ -18,7 +19,7 @@ public class HTTPEngine {
     public HashMap<String, String> headers;
 
     public HTTPResponse(String raw) {
-      res = raw;
+      this.raw = raw;
 
       headers = new HashMap<>();
       String tmp = "";
@@ -46,12 +47,17 @@ public class HTTPEngine {
     }
 
     public String toString() {
-      // String tostring = "Response : \n"
-      //                   + "Status : " + this.status + "\n"
-      //                   + "StatusText : " + this.statusText + "\n"
-      //                   + "Headers : " + this.headers + "\n"
-      //                   + "Data : " + this.data + "\n";
-      return this.data;
+      if (ClientApp.DEBUG_MODE)
+        return  "Raw response: \n"
+                + this.raw
+                + "\n"
+                + "Parsed Response : \n"
+                + "Status : " + this.status + "\n"
+                + "StatusText : " + this.statusText + "\n"
+                + "Headers : " + this.headers + "\n"
+                + "Data : - masked -\n";
+      else
+        return this.data;
     }
   }
 

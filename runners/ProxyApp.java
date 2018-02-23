@@ -31,7 +31,7 @@ public class ProxyApp {
       String uri = str.substring(str.indexOf(" ") + 1, index - 6);
 
       HTTPEngine.HTTPResponse response = http.get(version, uri, TransportLayer.WEB_LISTENING_PORT);
-      byteArray = response.res.getBytes();
+      byteArray = response.raw.getBytes();
 
       transportLayer.send(byteArray);
 

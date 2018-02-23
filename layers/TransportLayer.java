@@ -6,7 +6,6 @@ import extra.Connection;
 import java.util.Random;
 
 public class TransportLayer {
-  private static final boolean debug = false;
   //port that server will be listening on on localhost for webserver.
   public static final int WEB_LISTENING_PORT = 8888;
   //port that server will be listening on on localhost for proxy cache.
@@ -73,7 +72,7 @@ public class TransportLayer {
 
     if (segment.syn() == 1 && segment.ack() == 0) {
       segment.setACK();
-      
+
       send(segment.format());
       return receive();
     } else if (segment.syn() == 1 && segment.ack() == 1) {

@@ -1,6 +1,8 @@
 package engines;
 
 import extra.ResourceManager;
+import extra.Resource;
+import runners.ClientApp;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -59,7 +61,10 @@ import javax.print.attribute.HashAttributeSet;
         while (m.find()) {
           switch (m.group(1)) {
             case "img":
-              renderString = renderString.replace(m.group(0), this.resourceManager.getCachedResource(m.group(2)).toString());
+              Resource resource = this.resourceManager.getCachedResource(m.group(2));
+              if (ClientApp.DEBUG_MODE)
+                System.out.println(resource);
+              renderString = renderString.replace(m.group(0), resource.toString());
               break;
             case "href":
               if (findLink(numLinks - 1) == null) {
@@ -71,6 +76,6 @@ import javax.print.attribute.HashAttributeSet;
           }
         }
 
-        return renderString;
+        return ClientApp.DEBUG_MODE ? "" : renderString;
       }
   }

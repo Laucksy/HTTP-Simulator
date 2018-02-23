@@ -4,6 +4,7 @@ import engines.CLHTEngine;
 import engines.HTTPEngine;
 import layers.Browser;
 import layers.TransportLayer;
+import runners.ClientApp;
 
 import java.util.ArrayList;
 import java.sql.Timestamp;
@@ -54,10 +55,12 @@ public class Resource
     }
 
     public String toString() {
-      if (this.type.equals("text/clht"))
+      if (this.type.equals("text/clht")) {
+        if (ClientApp.DEBUG_MODE)
+          System.out.println(this.response.toString());
         return this.clhtEngine.render();
-      else
-        return this.response.data;
+      } else
+        return ClientApp.DEBUG_MODE ? this.response.toString() : this.response.data;
     }
 
     public HTTPEngine.HTTPResponse getResponse() {

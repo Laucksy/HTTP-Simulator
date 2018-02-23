@@ -1,6 +1,7 @@
 package extra;
 
 import engines.HTTPEngine;
+import runners.ClientApp;
 import java.util.HashMap;
 
 /**
@@ -21,24 +22,33 @@ public class ResourceManager
 
     private Resource loadUrl(String url) {
         Resource resource = new Resource(this, url);
-        if (/* debugging mode */false)
+        if (ClientApp.DEBUG_MODE)
           System.out.println("Loading resource " + url);
         this.resources.put(url, resource);
         resource.load();
-        if (/* debugging mode */false)
+        if (ClientApp.DEBUG_MODE)
           System.out.println("Finished loading resource " + url);
         return resource;
     }
 
     public Resource getCachedResource(String url) {
+        long start = System.currentTimeMillis();
         if (this.resources.containsKey(url) /* && localCachingEnabled */) {
-          if (/* debugging mode */ false)
+          if (ClientApp.DEBUG_MODE)
             System.out.println("Found locally cached resource " + url);
-          return this.resources.get(url);
+          Resource result = this.resources.get(url);
+          long end = System.currentTimeMillis();
+          if (ClientApp.DEBUG_MODE)
+            System.out.println("Took : " + (end - start) + " millis");
+          return result;
         } else {
-          if (/* debugging mode */ false)
+          if (ClientApp.DEBUG_MODE)
             System.out.println("Did not find locally cached resource " + url);
-          return this.loadUrl(url);
+          Resource result = this.loadUrl(url);
+          long end = System.currentTimeMillis();
+          if (ClientApp.DEBUG_MODE)
+            System.out.println("Took : " + (end - start) + " millis");
+          return result;
         }
     }
 

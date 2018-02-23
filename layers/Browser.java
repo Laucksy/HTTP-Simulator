@@ -4,6 +4,7 @@ import extra.ResourceManager;
 import extra.Resource;
 import engines.HTTPEngine;
 import layers.TransportLayer;
+import runners.ClientApp;
 
 import java.util.Scanner;
 import java.util.Timer;
@@ -178,7 +179,7 @@ public class Browser {
     loader.fillRest();
 
     System.out.println();
-    if (response.status == 404)
+    if (response.status == 404 && !ClientApp.DEBUG_MODE)
       render404();
     else
       System.out.println(this.currentResource);
@@ -193,11 +194,15 @@ public class Browser {
 
     @Override
     public void run() {
+      if (ClientApp.DEBUG_MODE)
+        return;
       System.out.print(ANSI_BLUE + "=" + ANSI_RESET);
       progress++;
     }
 
     public void fillRest() {
+      if (ClientApp.DEBUG_MODE)
+        return;
       for (int i = progress; i < 80; i++) {
         System.out.print(ANSI_BLUE + "=" + ANSI_RESET);
       }

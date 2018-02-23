@@ -20,8 +20,8 @@ public class ResourceManager
       this.http = new HTTPEngine();
     }
 
-    private Resource loadUrl(String url) {
-        Resource resource = new Resource(this, url);
+    private Resource loadUrl(String url, int port) {
+        Resource resource = new Resource(this, url, port);
         if (ClientApp.DEBUG_MODE)
           System.out.println("Loading resource " + url);
         this.resources.put(url, resource);
@@ -31,7 +31,7 @@ public class ResourceManager
         return resource;
     }
 
-    public Resource getCachedResource(String url) {
+    public Resource getCachedResource(String url, int port) {
         long start = System.currentTimeMillis();
         if (this.resources.containsKey(url) /* && localCachingEnabled */) {
           if (ClientApp.DEBUG_MODE)
@@ -40,11 +40,12 @@ public class ResourceManager
           long end = System.currentTimeMillis();
           if (ClientApp.DEBUG_MODE)
             System.out.println("Took : " + (end - start) + " millis");
+          
           return result;
         } else {
           if (ClientApp.DEBUG_MODE)
             System.out.println("Did not find locally cached resource " + url);
-          Resource result = this.loadUrl(url);
+          Resource result = this.loadUrl(url, port);
           long end = System.currentTimeMillis();
           if (ClientApp.DEBUG_MODE)
             System.out.println("Took : " + (end - start) + " millis");

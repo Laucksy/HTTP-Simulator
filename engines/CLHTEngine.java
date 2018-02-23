@@ -4,6 +4,7 @@ import extra.ResourceManager;
 import extra.Resource;
 import runners.ClientApp;
 import layers.Browser;
+import layers.TransportLayer;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -31,16 +32,18 @@ import javax.print.attribute.HashAttributeSet;
       private String doc;
       private ResourceManager resourceManager;
       private ArrayList<Link> links;
+      private int port; 
 
 
       /**
        * Constructor for objects of class CLHTEngine
        */
-      public CLHTEngine(ResourceManager resourceManager, String doc)
+      public CLHTEngine(ResourceManager resourceManager, String doc, int port)
       {
           this.doc = doc;
           this.resourceManager = resourceManager;
           this.links = new ArrayList<Link>();
+          this.port = port;
       }
 
       public ArrayList<Link> getLinks() {
@@ -62,7 +65,7 @@ import javax.print.attribute.HashAttributeSet;
         while (m.find()) {
           switch (m.group(1)) {
             case "img":
-              Resource resource = this.resourceManager.getCachedResource(m.group(2));
+              Resource resource = this.resourceManager.getCachedResource(m.group(2), this.port);
               if (ClientApp.DEBUG_MODE)
                 System.out.println(resource);
               renderString = renderString.replace(m.group(0), resource.toString());

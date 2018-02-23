@@ -7,9 +7,11 @@ import java.util.concurrent.TimeUnit;
 
 public abstract class ServerEngine {
   protected TransportLayer transportLayer;
+  protected int port;
 
   public ServerEngine (int port) {
     transportLayer = new TransportLayer(true, port);
+    this.port = port;
   }
 
   public void run () throws Exception {

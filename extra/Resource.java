@@ -16,16 +16,18 @@ public class Resource
     protected String type;
     protected String file;
     protected boolean loaded;
+    protected int port;
     protected Timestamp requestedDate;
     protected Timestamp loadedDate;
     protected HTTPEngine.HTTPResponse response;
 
     private CLHTEngine clhtEngine;
 
-    public Resource(ResourceManager resourceManager, String url) {
+    public Resource(ResourceManager resourceManager, String url, int port) {
       this.url = url;
       this.resourceManager = resourceManager;
       this.requestedDate = new Timestamp(System.currentTimeMillis());
+      this.port = port;
     }
 
     public void load() {
@@ -33,7 +35,7 @@ public class Resource
                         .get(
                             /* http version */ "1.1",
                             /* url */ this.url,
-                            /* port */ TransportLayer.PROXY_LISTENING_PORT
+                            /* port */ this.port
                         );
 
       this.loadedDate = new Timestamp(System.currentTimeMillis());
@@ -42,7 +44,7 @@ public class Resource
       this.type = this.response.getHeader("Content-Type");
 
       if (this.type.equals("text/clht"))
-        this.clhtEngine = new CLHTEngine(this.resourceManager, this.response.data);
+        this.clhtEngine = new CLHTEngine(this.resourceManager, this.response.data, this.port);
     }
 
     public String findLink(int id) {

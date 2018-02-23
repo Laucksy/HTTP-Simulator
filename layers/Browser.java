@@ -172,7 +172,7 @@ public class Browser {
     timer.scheduleAtFixedRate(loader, /* initialDelay */ 0, /* interval */ 100);
 
     long start = System.currentTimeMillis();
-    this.currentResource = resourceManager.getCachedResource(url);
+    this.currentResource = resourceManager.getCachedResource(url, TransportLayer.PROXY_LISTENING_PORT);
     HTTPEngine.HTTPResponse response = this.currentResource.getResponse();
 
     // Finish loading

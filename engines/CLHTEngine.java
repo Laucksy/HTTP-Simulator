@@ -1,5 +1,7 @@
 package engines;
 
+import extra.ResourceManager;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
@@ -14,8 +16,8 @@ import javax.print.attribute.HashAttributeSet;
   public class CLHTEngine
   {
       public class Link {
-        String url;
-        String title;
+        public String url;
+        public String title;
 
         public Link(String url, String title) {
           this.url = url;
@@ -24,59 +26,48 @@ import javax.print.attribute.HashAttributeSet;
       }
 
       private String doc;
+      private ResourceManager resourceManager;
+      private ArrayList<Link> links;
 
-      public ArrayList<Link> links;
-      public ArrayList<String> images;
 
       /**
        * Constructor for objects of class CLHTEngine
        */
-      public CLHTEngine(String doc)
+      public CLHTEngine(ResourceManager resourceManager, String doc)
       {
           this.doc = doc;
-          
+          this.resourceManager = resourceManager;
           this.links = new ArrayList<Link>();
-          this.images = new ArrayList<String>();
+      }
 
-           Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +([^ ]+ +)?\\*{3}");
-           Matcher m = resourcePattern.matcher(doc);
+      public ArrayList<Link> getLinks() {
+        return this.links;
+      }
 
-            while (m.find()) {
-              switch (m.group(1)) {
-                case "img":
-                  images.add(m.group(2));
-                  break;
-                case "href":
-                  links.add(new Link(m.group(2), m.group(3)));
-                  break;
-              }
-            }
+      public Link findLink(int id) {
+        return this.links.size() <= id ? null : this.links.get(id);
       }
 
       public String render()
       {
-        String copy = doc;        
-        Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +([^ ]+ +)?\\*{3}");
+        String renderString = doc;
+        Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +(.+)?\\*{3}");
         Matcher m = resourcePattern.matcher(doc);
         HashMap<String, String> tmp = new HashMap<String, String>();
 
-        tmp.put("g", "hello there");
-        tmp.put("c", "bye");
-        tmp.put("a", "hmm");
-
-        for (int i = 0; i < links.size(); i++) {
-          System.out.println(links.get(i).url);
-        }
-
 
         while (m.find()) {
-          System.out.println(m.group(0));
-          copy = copy.replace(m.group(0), tmp.get(m.group(2).substring(0, 1)));
+          switch (m.group(1)) {
+            case "img":
+              renderString = renderString.replace(m.group(0), this.resourceManager.getCachedResource(m.group(2)).toString());
+              break;
+            case "href":
+              this.links.add(new Link(m.group(2), m.group(3)));
+              renderString = renderString.replace(m.group(0), "[👉🏻 " + this.links.size() + "] " + m.group(3));
+              break;
+          }
         }
 
-       
-        System.out.println(copy);
-
-        return "";
+        return renderString;
       }
   }

@@ -34,6 +34,7 @@ public class Browser {
 
   // Internal components
   private ResourceManager resourceManager = new ResourceManager();
+  private Resource currentResource;
 
   public Browser() {}
 
@@ -87,6 +88,8 @@ public class Browser {
 
       if (url.equals("home"))
         renderHome();
+      else if (url.matches("-?\\d+(\\.\\d+)?") && this.currentResource != null)
+        renderUrl(this.currentResource.findLink(Integer.parseInt(url) - 1));
       else
         renderUrl(url);
 
@@ -161,8 +164,8 @@ public class Browser {
 
     timer.scheduleAtFixedRate(loader, /* initialDelay */ 0, /* interval */ 100);
 
-    Resource resource = resourceManager.loadUrl(url);
-    HTTPEngine.HTTPResponse response = resource.getResponse();
+    this.currentResource = resourceManager.getCachedResource(url);
+    HTTPEngine.HTTPResponse response = this.currentResource.getResponse();
 
     // Finish loading
     timer.cancel();
@@ -172,7 +175,7 @@ public class Browser {
     if (response.status == 404)
       render404();
     else
-      System.out.println(resource);
+      System.out.println(this.currentResource);
   }
 
   class Loader extends TimerTask {

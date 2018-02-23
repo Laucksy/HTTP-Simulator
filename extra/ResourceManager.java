@@ -1,7 +1,7 @@
 package extra;
 
 import engines.HTTPEngine;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * ResourceManager - holds a queue of resources to request and dispatches
@@ -13,18 +13,33 @@ public class ResourceManager
 {
     private HTTPEngine http;
 
-    private ArrayList<Resource> resources = new ArrayList<Resource>();
+    private HashMap<String, Resource> resources = new HashMap<String, Resource>();
 
     public ResourceManager() {
       this.http = new HTTPEngine();
     }
 
-    public Resource loadUrl(String url) {
-        // Make requests to load dependencies
+    private Resource loadUrl(String url) {
         Resource resource = new Resource(this, url);
-        this.resources.add(resource);
+        if (/* debugging mode */false)
+          System.out.println("Loading resource " + url);
+        this.resources.put(url, resource);
         resource.load();
+        if (/* debugging mode */false)
+          System.out.println("Finished loading resource " + url);
         return resource;
+    }
+
+    public Resource getCachedResource(String url) {
+        if (this.resources.containsKey(url) /* && localCachingEnabled */) {
+          if (/* debugging mode */ false)
+            System.out.println("Found locally cached resource " + url);
+          return this.resources.get(url);
+        } else {
+          if (/* debugging mode */ false)
+            System.out.println("Did not find locally cached resource " + url);
+          return this.loadUrl(url);
+        }
     }
 
     public HTTPEngine httpClient() {

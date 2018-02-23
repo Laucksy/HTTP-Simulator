@@ -5,6 +5,7 @@ import layers.TransportLayer;
 import helpers.Helper;
 
 import java.util.regex.*;
+import java.io.File;
 
 public class Server extends ServerEngine {
   public Server () {
@@ -24,7 +25,11 @@ public class Server extends ServerEngine {
     int code = fileData.equals("Not Found") ? 404 : 200;
     String data = fileData.equals("Not Found") ? "" : fileData;
 
-    String response = createResponse(version, code, type, data, uri, ifModified);
+    File file = new File("website_example/" + uri);
+    long lastModified = file.lastModified();
+    if (ifModified > lastModified) code = 304;
+
+    String response = createResponse(version, code, type, data, uri, lastModified);
     byteArray = response.getBytes();
     transportLayer.send(byteArray);
   }

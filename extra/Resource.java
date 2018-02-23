@@ -13,11 +13,11 @@ public class Resource
     protected ResourceManager resourceManager;
     protected String url;
     protected String type;
-    protected String file;
+    public String file;
     protected boolean loaded;
     protected int port;
     protected long requestedDate;
-    protected long loadedDate;
+    public long loadedDate;
     protected HTTPEngine.HTTPResponse response;
 
     private CLHTEngine clhtEngine;
@@ -40,6 +40,7 @@ public class Resource
 
       this.loadedDate = System.currentTimeMillis();
       this.loaded = true;
+      this.file = this.response.data;
 
       this.type = this.response.getHeader("Content-Type");
 

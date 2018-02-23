@@ -18,6 +18,8 @@
         }
       }
 
+      private String doc = doc;
+
       public ArrayList<Link> links;
       public ArrayList<String> images;
 
@@ -26,6 +28,8 @@
        */
       public CLHTEngine(String doc)
       {
+          this.doc = doc;
+          
           this.links = new ArrayList<Link>();
           this.images = new ArrayList<String>();
 
@@ -46,6 +50,19 @@
 
       public String render()
       {
-        return "";
+        Pattern resourcePattern = Pattern.compile("\\*{3} +([^ ]+) +([^ ]+) +([^ ]+ +)?\\*{3}");
+        Matcher m = resourcePattern.matcher(doc);
+
+         while (m.find()) {
+           switch (m.group(1)) {
+             case "img":
+               images.add(m.group(2));
+               break;
+             case "href":
+               links.add(new Link(m.group(2), m.group(3)));
+               break;
+           }
+         }
+         return "";
       }
   }

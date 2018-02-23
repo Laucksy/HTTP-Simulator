@@ -40,13 +40,12 @@ public class ResourceManager
 
           HTTPEngine.HTTPResponse res =  http.get("1.1", url, port, result.loadedDate);
 
-          if (res.status == 304) {
+          if (res.status != 304) {
             result.loadedDate = System.currentTimeMillis();
-          } else {
             result.file = res.data;
           }
 
-          // result.response = res;
+          result.response = res;
 
           long end = System.currentTimeMillis();
           if (ClientApp.DEBUG_MODE)

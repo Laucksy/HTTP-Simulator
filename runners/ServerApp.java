@@ -1,8 +1,6 @@
 package runners;
 
 import endsystems.Server;
-import layers.TransportLayer;
-import helpers.Helper;
 
 //This class represents the server application
 public class ServerApp {

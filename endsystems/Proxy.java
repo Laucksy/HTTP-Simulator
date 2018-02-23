@@ -9,15 +9,33 @@ import helpers.Helper;
 
 import java.util.regex.*;
 
+/*
+  Proxy - Endsystem for the proxy implementation. Implements the ServerEngine
+  class and creates a specialized version of it, containing an added caching
+  stage
+
+*/
+
 public class Proxy extends ServerEngine {
   ResourceManager manager;
 
+  /*
+    Constructor - Creates the proxy server
+    @param trans Transmission delay
+    @param prop Propagation delay
+  */
   public Proxy (int trans, int prop) {
     super(TransportLayer.PROXY_LISTENING_PORT, trans, prop);
 
     manager = new ResourceManager(trans, prop);
   }
 
+  /*
+    Method load (@Override) - Manages the proxy's cache (implemented through the 
+    ResourceManager abstraction), fetches responses from the server and
+    transmits the requested files to the client.
+  */
+  @Override
   public void load (String version, String uri, String raw) {
 
     Resource resource = manager.getCachedResource(uri, TransportLayer.WEB_LISTENING_PORT);

@@ -2,7 +2,12 @@ package runners;
 
 import endsystems.Server;
 
-//This class represents the server application
+
+/*
+  Server - Runs the server app and passes the delay arguments to it
+
+*/
+
 public class ServerApp {
   public static void main(String[] args) throws Exception{
     int TRANSMISSION_DELAY_RATE = 1;
@@ -12,6 +17,7 @@ public class ServerApp {
       PROPAGATION_DELAY = Integer.parseInt(args[1]);
     }
 
+    // Create a new instance of a server
     Server  server = new Server(TRANSMISSION_DELAY_RATE, PROPAGATION_DELAY);
     server.run();
   }

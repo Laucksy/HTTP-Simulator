@@ -1,6 +1,12 @@
 compile:
-	javac *.java
+	javac $$(find . -name '*.java')
 clean:
-	rm -r *.class
+	rm -r engines/*.class extra/*.class helpers/*.class layers/*.class runners/*.class
 cc:
 	make clean; make compile
+server:
+	java runners.ServerApp
+proxy:
+	java runners.ProxyApp
+client:
+	java runners.ClientApp

@@ -1,3 +1,8 @@
+package layers;
+
+import extra.Segment;
+import extra.Connection;
+
 import java.util.Random;
 
 public class TransportLayer {

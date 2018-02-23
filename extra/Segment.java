@@ -1,3 +1,5 @@
+package extra;
+
 public class Segment {
   private int[] flags;
   private int source;

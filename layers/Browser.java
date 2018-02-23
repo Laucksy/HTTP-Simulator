@@ -1,3 +1,10 @@
+package layers;
+
+import extra.ResourceManager;
+import extra.Resource;
+import engines.HTTPEngine;
+import layers.TransportLayer;
+
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,11 +34,6 @@ public class Browser {
 
   // Internal components
   private ResourceManager resourceManager = new ResourceManager();
-
-
-  public static void main(String[] args) throws Exception {
-    Browser broswer = new Browser();
-  }
 
   public Browser() {
     renderRoutine();

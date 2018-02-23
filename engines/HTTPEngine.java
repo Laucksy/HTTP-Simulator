@@ -1,3 +1,7 @@
+package engines;
+
+import extra.Connection;
+
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.*;

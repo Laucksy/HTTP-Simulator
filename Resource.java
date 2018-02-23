@@ -44,9 +44,9 @@ public class Resource
       this.loadedDate = new Timestamp(System.currentTimeMillis());
       this.loaded = true;
 
-      this.type = this.response.getHeader("Content-type");
-
-      if (this.type == "text/clht")
+      this.type = this.response.getHeader("Content-Type");
+      
+      if (this.type.equals("text/clht"))
         this.clhtEngine = new CLHTEngine(this.response.data);
 
       this.dependencies = this.getDependencies();
@@ -56,7 +56,7 @@ public class Resource
     }
 
     public String toString() {
-      return this.response.toString();
+      return this.render();
     }
 
     public HTTPEngine.HTTPResponse getResponse() {

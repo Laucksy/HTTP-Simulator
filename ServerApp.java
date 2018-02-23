@@ -24,8 +24,6 @@ public class ServerApp {
 
       String fileData = Helper.instance().read("website_example/" + uri);
       String type = Helper.instance().type("website_example/" + uri);
-
-      System.out.println("Found type of file " + type);
       
       int code = fileData.equals("Not Found") ? 404 : 200;
       String data = fileData.equals("Not Found") ? "" : fileData;
@@ -45,7 +43,7 @@ public class ServerApp {
     response += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
     //TODO: Add Date and Last-Modified
     response += "Content-Length: " + data.length() + "\n";
-    response += "Content-Type: text/" + type + "\n";
+    response += "Content-Type: " + type + "\n";
     response += "\n";
     response += data;
 

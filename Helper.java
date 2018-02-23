@@ -35,7 +35,7 @@ public final class Helper {
 
   public String type (String url) {
     return url.lastIndexOf('.') > 0 ?
-            "text/" + url.substring(url.lastIndexOf('.')) :
+            "text/" + url.substring(url.lastIndexOf('.') + 1) :
             "application/octet-stream";
   }
 

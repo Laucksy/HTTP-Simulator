@@ -13,7 +13,7 @@ public class Resource
     protected ResourceManager resourceManager;
     protected String url;
     protected String type;
-    public String file;
+    public String file = "";
     protected boolean loaded;
     protected int port;
     protected long requestedDate;
@@ -40,7 +40,9 @@ public class Resource
 
       this.loadedDate = System.currentTimeMillis();
       this.loaded = true;
-      this.file = this.response.data;
+      if (this.response.status != 304
+          && this.response.status != 404)
+        this.file = this.response.data;
 
       this.type = this.response.getHeader("Content-Type");
 
@@ -63,7 +65,7 @@ public class Resource
           System.out.println(this.response.toString());
         return this.clhtEngine.render();
       } else
-        return ClientApp.DEBUG_MODE ? this.response.toString() : this.response.data;
+        return ClientApp.DEBUG_MODE ? this.response.toString() : this.file;
     }
 
     public HTTPEngine.HTTPResponse getResponse() {

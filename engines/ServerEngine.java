@@ -1,40 +1,38 @@
 package engines;
 
-import layers.TransportLayer;
+import engines.HTTPEngine;
 import helpers.Helper;
 
 import java.util.concurrent.TimeUnit;
 import java.io.File;
 
 public abstract class ServerEngine {
-  protected TransportLayer transportLayer;
+  protected HTTPEngine http;
   protected int port;
 
   public ServerEngine (int port) {
-    transportLayer = new TransportLayer(true, port);
+    this.http = new HTTPEngine();
     this.port = port;
   }
 
   public void run () throws Exception {
     while (true) {
-      byte[] byteArray = transportLayer.receive();
+      String str = http.listen(this.port);
 
-      if (byteArray == null) {
+      if (str == null || str.equals("")) {
         TimeUnit.MILLISECONDS.sleep(250);
         continue;
       }
-
-      String str = new String (byteArray);
 
       int index = str.indexOf("HTTP/") + 5;
       String version = str.substring(index, index + 3);
       String uri = str.substring(str.indexOf(" ") + 1, index - 6);
 
-      load(version, uri, byteArray);
+      load(version, uri, str);
     }
   }
 
-  public abstract void load (String version, String uri, byte[] byteArray);
+  public abstract void load (String version, String uri, String raw);
 
   public String createResponse(String version, int code, String type, String data, String uri, long lastModified) {
 
@@ -45,11 +43,11 @@ public abstract class ServerEngine {
     String response = "HTTP/" + version + " " + code + " " + msg + "\n";
     response += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
     response += "Date: " + System.currentTimeMillis() + "\n";
-    response += "Last-Modified: " + lastModified + "\n"; 
+    response += "Last-Modified: " + lastModified + "\n";
     response += "Content-Length: " + data.length() + "\n";
     response += "Content-Type: " + type + "\n";
     response += "\n";
-    
+
     if (code != 304)
       response += data;
 

@@ -26,6 +26,8 @@ public class ResourceManager
           System.out.println("Loading resource " + url);
         this.resources.put(url, resource);
         resource.load();
+        if (resource.getResponse().status == 404)
+          this.resources.remove(url);
         if (ClientApp.DEBUG_MODE)
           System.out.println("Finished loading resource " + url);
         return resource;
@@ -50,7 +52,7 @@ public class ResourceManager
           long end = System.currentTimeMillis();
           if (ClientApp.DEBUG_MODE)
             System.out.println("Took : " + (end - start) + " millis");
-          
+
           return result;
         } else {
           if (ClientApp.DEBUG_MODE)

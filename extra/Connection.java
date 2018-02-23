@@ -11,9 +11,9 @@ public class Connection {
   private int port;
   private boolean isServer;
 
-  public Connection(boolean isServer, int p) {
+  public Connection(boolean isServer, int p, int trans, int prop) {
     this.port = p;
-    this.transportLayer = new TransportLayer(isServer, port);
+    this.transportLayer = new TransportLayer(isServer, port, trans, prop);
     this.isServer = isServer;
   }
 

@@ -4,12 +4,14 @@ package layers;
 import java.util.concurrent.TimeUnit;
 
 public class NetworkLayer {
-  private final long PROPAGATION_DELAY = 100;
-  private final long TRANSMISSION_DELAY_RATE = 1;
+  private final long TRANSMISSION_DELAY_RATE;
+  private final long PROPAGATION_DELAY;
   private LinkLayer linkLayer;
 
-  public NetworkLayer(boolean server, int addr) {
+  public NetworkLayer(boolean server, int addr, int trans, int prop) {
     linkLayer = new LinkLayer(server, addr);
+    TRANSMISSION_DELAY_RATE = trans;
+    PROPAGATION_DELAY = prop;
   }
 
   public void close() {

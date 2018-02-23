@@ -16,8 +16,8 @@ public class ResourceManager
 
     private HashMap<String, Resource> resources = new HashMap<String, Resource>();
 
-    public ResourceManager() {
-      this.http = new HTTPEngine();
+    public ResourceManager(int trans, int props) {
+      this.http = new HTTPEngine(trans, props);
     }
 
     private Resource loadUrl(String url, int port) {

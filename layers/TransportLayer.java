@@ -17,8 +17,8 @@ public class TransportLayer {
   //server is true if the application is a server (should listen)
   //or false if it is a client (should try and connect)
   //addr is the port number to listen or connect to
-  public TransportLayer(boolean server, int addr) {
-    networkLayer = new NetworkLayer(server, addr);
+  public TransportLayer(boolean server, int addr, int trans, int prop) {
+    networkLayer = new NetworkLayer(server, addr, trans, prop);
     rand = new Random();
   }
 

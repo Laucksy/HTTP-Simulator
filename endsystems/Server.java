@@ -8,8 +8,8 @@ import java.util.regex.*;
 import java.io.File;
 
 public class Server extends ServerEngine {
-  public Server () {
-    super(TransportLayer.WEB_LISTENING_PORT);
+  public Server (int trans, int prop) {
+    super(TransportLayer.WEB_LISTENING_PORT, trans, prop);
   }
 
   public void load (String version, String uri, String raw) {

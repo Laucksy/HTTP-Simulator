@@ -9,6 +9,8 @@ import java.util.regex.*;
 
 public class HTTPEngine {
   Connection connection;
+  private int TRANSMISSION_DELAY_RATE;
+  private int PROPAGATION_DELAY;
 
   public class HTTPResponse {
     public String raw;
@@ -61,13 +63,15 @@ public class HTTPEngine {
     }
   }
 
-  public HTTPEngine() {
+  public HTTPEngine(int trans, int prop) {
     connection = null;
+    TRANSMISSION_DELAY_RATE = trans;
+    PROPAGATION_DELAY = prop;
   }
 
   public HTTPResponse get(String version, String uri, int port, long loadedDate) {
     if (connection == null || connection.getPort() != port || !connection.isClient()) {
-      connection = new Connection(/* isServer */ false, port);
+      connection = new Connection(/* isServer */ false, port, TRANSMISSION_DELAY_RATE, PROPAGATION_DELAY);
       connection.connect();
     }
 
@@ -92,7 +96,7 @@ public class HTTPEngine {
 
   public String listen(int port) {
     if (connection == null || connection.getPort() != port || !connection.isServer()) {
-      connection = new Connection(/* isServer */ true, port);
+      connection = new Connection(/* isServer */ true, port, TRANSMISSION_DELAY_RATE, PROPAGATION_DELAY);
       connection.connect();
     }
     return connection.receive();
@@ -100,7 +104,7 @@ public class HTTPEngine {
 
   public void send(String data, int port) {
     if (connection == null || connection.getPort() != port || !connection.isServer()) {
-      connection = new Connection(/* isServer */ true, port);
+      connection = new Connection(/* isServer */ true, port, TRANSMISSION_DELAY_RATE, PROPAGATION_DELAY);
       connection.connect();
     }
     connection.send(data);

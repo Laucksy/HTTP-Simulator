@@ -10,8 +10,8 @@ public abstract class ServerEngine {
   protected HTTPEngine http;
   protected int port;
 
-  public ServerEngine (int port) {
-    this.http = new HTTPEngine();
+  public ServerEngine (int port, int trans, int prop) {
+    this.http = new HTTPEngine(trans, prop);
     this.port = port;
   }
 

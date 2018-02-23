@@ -12,10 +12,10 @@ import java.util.regex.*;
 public class Proxy extends ServerEngine {
   ResourceManager manager;
 
-  public Proxy () {
-    super(TransportLayer.PROXY_LISTENING_PORT);
+  public Proxy (int trans, int prop) {
+    super(TransportLayer.PROXY_LISTENING_PORT, trans, prop);
 
-    manager = new ResourceManager();
+    manager = new ResourceManager(trans, prop);
   }
 
   public void load (String version, String uri, String raw) {

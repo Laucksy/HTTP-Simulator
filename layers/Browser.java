@@ -34,7 +34,7 @@ public class Browser {
   public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
 
   // Internal components
-  private ResourceManager resourceManager = new ResourceManager();
+  private ResourceManager resourceManager = new ResourceManager(1, 100);
   private Resource currentResource;
 
   public Browser() {}

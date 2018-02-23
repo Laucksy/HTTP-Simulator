@@ -1,7 +1,9 @@
 package endsystems;
 
-public class Server {
+import engines.ServerEngine;
+
+public class Server extends ServerEngine {
   public Server () {
-    
+    super();
   }
 }

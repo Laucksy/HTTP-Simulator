@@ -1,7 +1,9 @@
 package endsystems;
 
-public class Proxy {
+import engines.ServerEngine;
+
+public class Proxy extends ServerEngine{
   public Proxy () {
-    
+    super();
   }
 }

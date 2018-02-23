@@ -1,13 +1,13 @@
 package runners;
 
-import engines.ServerEngine;
+import endsystems.Server;
 import layers.TransportLayer;
 import helpers.Helper;
 
 //This class represents the server application
 public class ServerApp {
   public static void main(String[] args) throws Exception{
-    ServerEngine  server = new ServerEngine();
+    Server  server = new Server();
     server.run();
   }
 }

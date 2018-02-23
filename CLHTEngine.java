@@ -3,10 +3,10 @@
   import java.util.regex.*;
 
   /**
-   * CLMLParser - Parses and displays the CLML files
+   * CLHTEngine - Parses and displays the CLHT files
    *
    */
-  public class CLMLParser
+  public class CLHTEngine
   {
       public class Link {
         String url;
@@ -22,9 +22,9 @@
       public ArrayList<String> images;
 
       /**
-       * Constructor for objects of class CLMLParser
+       * Constructor for objects of class CLHTEngine
        */
-      public CLMLParser(String doc)
+      public CLHTEngine(String doc)
       {
           this.links = new ArrayList<Link>();
           this.images = new ArrayList<String>();
@@ -42,5 +42,10 @@
                   break;
               }
             }
+      }
+
+      public String render()
+      {
+        return "";
       }
   }

@@ -157,8 +157,8 @@ public class Browser {
 
     timer.scheduleAtFixedRate(loader, /* initialDelay */ 0, /* interval */ 100);
 
-    Resource resource = resourceManager.loadUrl(new Request(url, Resource.Type.CLML));
-    HTTP.HTTPResponse response = resource.getResponse();
+    Resource resource = resourceManager.loadUrl(url);
+    HTTPEngine.HTTPResponse response = resource.getResponse();
 
     // Finish loading
     timer.cancel();

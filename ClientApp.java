@@ -8,8 +8,8 @@ public class ClientApp {
     //create a new transport layer for client (hence false)
     //(connect to server), and read in first line from keyboard
 
-    HTTP http = new HTTP();
-    HTTP.HTTPResponse response = http.get("1.1", "animals.clht", TransportLayer.PROXY_LISTENING_PORT);
+    HTTPEngine http = new HTTPEngine();
+    HTTPEngine.HTTPResponse response = http.get("1.1", "animals.clht", TransportLayer.PROXY_LISTENING_PORT);
 
     response = http.get("1.1", "cat.clht", TransportLayer.PROXY_LISTENING_PORT);
   }

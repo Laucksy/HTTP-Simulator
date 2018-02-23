@@ -16,9 +16,9 @@ public class ResourceManager
       this.http = new HTTP();
     }
 
-    public Resource loadUrl(Request request) {
+    public Resource loadUrl(String url) {
         // Make requests to load dependencies
-        Resource resource = new Resource(this, request);
+        Resource resource = new Resource(this, url);
         this.resources.add(resource);
         resource.load();
         return resource;

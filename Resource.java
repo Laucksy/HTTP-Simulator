@@ -3,36 +3,33 @@ import java.sql.Timestamp;
 
 public class Resource
 {
-    public enum Type
-    {
-        CLML, IMG, OTHER;
-    }
-
     protected ResourceManager resourceManager;
-    protected Request request;
+    protected String url;
+    protected String type;
     protected String file;
     protected boolean loaded;
     protected Timestamp requestedDate;
     protected Timestamp loadedDate;
-    protected HTTP.HTTPResponse response;
+    protected HTTPEngine.HTTPResponse response;
+    protected ArrayList<String> dependencies;
 
-    private CLMLParser parser;
+    private CLHTEngine clhtEngine;
 
-    public Resource(ResourceManager resourceManager, Request request) {
-      this.request = request;
+    public Resource(ResourceManager resourceManager, String url) {
+      this.url = url;
       this.resourceManager = resourceManager;
       this.requestedDate = new Timestamp(System.currentTimeMillis());
     }
 
-    public ArrayList<Request> getDependencies() {
-        switch (this.request.type) {
-          case CLML:
-            ArrayList<Request> dependencies = new ArrayList<Request>();
-            for (String image : parser.images) {
-              dependencies.add(new Request(image, Resource.Type.IMG));
+    public ArrayList<String> getDependencies() {
+        switch (this.type) {
+          case "text/clht":
+            ArrayList<String> dependencies = new ArrayList<String>();
+            for (String image : this.clhtEngine.images) {
+              dependencies.add(image);
             }
           default:
-            return new ArrayList<Request>();
+            return new ArrayList<String>();
         }
     }
 
@@ -40,16 +37,21 @@ public class Resource
       this.response = this.resourceManager.httpClient()
                         .get(
                             /* http version */ "1.1",
-                            /* url */ this.request.getUrl(),
+                            /* url */ this.url,
                             /* port */ TransportLayer.PROXY_LISTENING_PORT
                         );
-      // http error handling
+
       this.loadedDate = new Timestamp(System.currentTimeMillis());
       this.loaded = true;
-      this.parser = new CLMLParser(this.response.data);
-      ArrayList<Request> dependencies = this.getDependencies();
-      for (Request dependencyRequest: dependencies) {
-        resourceManager.loadUrl(dependencyRequest);
+
+      this.type = this.response.getHeader("Content-type");
+
+      if (this.type == "text/clht")
+        this.clhtEngine = new CLHTEngine(this.response.data);
+
+      this.dependencies = this.getDependencies();
+      for (String dependency: dependencies) {
+        resourceManager.loadUrl(dependency);
       }
     }
 
@@ -57,7 +59,11 @@ public class Resource
       return this.response.toString();
     }
 
-    public HTTP.HTTPResponse getResponse() {
+    public HTTPEngine.HTTPResponse getResponse() {
       return this.response;
+    }
+
+    public String render() {
+      return this.clhtEngine.render();
     }
 }

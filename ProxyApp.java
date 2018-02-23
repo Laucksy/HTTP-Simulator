@@ -25,12 +25,12 @@ public class ProxyApp {
       String version = str.substring(index, index + 3);
       String uri = str.substring(str.indexOf(" ") + 1, index - 6);
 
-      HTTP.HTTPResponse response = http.get(version, uri, TransportLayer.WEB_LISTENING_PORT);
+      HTTPEngine.HTTPResponse response = http.get(version, uri, TransportLayer.WEB_LISTENING_PORT);
       byteArray = response.res.getBytes();
 
       transportLayer.send(byteArray);
 
-      
+
     }
   }
 

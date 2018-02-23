@@ -2,7 +2,7 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.regex.*;
 
-public class HTTP {
+public class HTTPEngine {
   Connection connection;
 
   public class HTTPResponse {
@@ -15,7 +15,7 @@ public class HTTP {
 
     public HTTPResponse(String raw) {
       res = raw;
-      
+
       headers = new HashMap<>();
       String tmp = "";
       Pattern general = Pattern.compile("HTTP/(\\d.\\d) (\\d{3}) ([a-zA-Z ]+)\\n((.+:.+\\s*)+)([\\S\\s]+)");
@@ -37,6 +37,10 @@ public class HTTP {
 
     }
 
+    public String getHeader(String header) {
+      return headers.get(header) == null ? "" : headers.get(header);
+    }
+
     public String toString() {
       // String tostring = "Response : \n"
       //                   + "Status : " + this.status + "\n"
@@ -47,7 +51,7 @@ public class HTTP {
     }
   }
 
-  public HTTP() {
+  public HTTPEngine() {
     connection = null;
   }
 

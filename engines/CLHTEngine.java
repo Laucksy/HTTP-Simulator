@@ -50,10 +50,19 @@ import javax.print.attribute.HashAttributeSet;
         return this.links;
       }
 
+      /**
+       * get the link from Link array list
+       */
       public Link findLink(int id) {
         return this.links.size() <= id ? null : this.links.get(id);
       }
 
+      /**
+       * Render file after parsing and getting all the nested files, replace those file urls
+       * with their content and display in the browser
+       * 
+       * @return String
+       */
       public String render()
       {
         String renderString = doc;
@@ -61,6 +70,8 @@ import javax.print.attribute.HashAttributeSet;
         Matcher m = resourcePattern.matcher(doc);
         HashMap<String, String> tmp = new HashMap<String, String>();
 
+        // Start replacing links with the file content
+        // replace .img with the image content kept in resource manager
         int numLinks = 1;
         while (m.find()) {
           switch (m.group(1)) {

@@ -22,6 +22,9 @@ public class TransportLayer {
     rand = new Random();
   }
 
+  /**
+   * Connect to the server, start setting up TCP connection
+   */
   public void connect () {
     segment = new Segment(0, WEB_LISTENING_PORT, rand.nextInt(10000));
     segment.setSYN();
@@ -30,10 +33,20 @@ public class TransportLayer {
     receive();
   }
 
+  /**
+   * Close connection
+   */
   public void close() {
     networkLayer.close();
   }
 
+  /**
+   * Send data to the server
+   * 
+   * @param payload: byte[]
+   * 
+   *
+   */
   public void send(byte[] payload) {
 
     if (segment.ack() == 1 && segment.syn() == 0) {
@@ -52,6 +65,9 @@ public class TransportLayer {
 
   }
 
+  /**
+   * receive the data and check if tcp connection is not setup yet
+   */
   public byte[] receive() {
     byte[] payload = networkLayer.receive();
 
@@ -70,6 +86,10 @@ public class TransportLayer {
 
     segment = new Segment(header);
 
+    // check for SYN and ACK flags
+    // if SYN is set and ACK is not this means client is starting handshake process
+    // After that server return Syn and Ack set
+    // Finally client unsets Syn and sends data with ACK flag set
     if (segment.syn() == 1 && segment.ack() == 0) {
       segment.setACK();
 

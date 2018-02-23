@@ -1,12 +1,22 @@
 package extra;
 
+/**
+ * Segment class that represent the TCP segment
+ */
 public class Segment {
   private int[] flags;
   private int source;
   private int destination;
   private int sequenceNumber;
   private int ackNumber;
-
+  
+  /**
+   * Segment constructor
+   * 
+   * @param source - int
+   * @param destination - int
+   * @param sequenceNumber - int
+   */
   public Segment (int source, int destination, int sequenceNumber) {
     // SYN, FIN, ACK flags are not set initially
     flags = new int[]{0, 0, 0};
@@ -17,6 +27,9 @@ public class Segment {
     this.ackNumber = -1;
   }
 
+  /**
+   * Constructor for Segment with ackNumber
+   */
   public Segment (int source, int destination, int sequenceNumber, int ackNumber) {
     // SYN, FIN, ACK flags are not set initially
     flags = new int[]{0, 0, 0};
@@ -27,6 +40,11 @@ public class Segment {
     this.ackNumber = ackNumber;
   }
 
+  /**
+   * Constructor for segment based on provided 32 byte segment
+   * 
+   * @param segment - byte[]
+   */
   public Segment (byte[] segment) {
     // SYN, FIN, ACK flags are not set initially
     flags = new int[]{0, 0, 0};
@@ -159,6 +177,11 @@ public class Segment {
     return segment;
   }
 
+  /**
+   * Convert the object to String, represent its content
+   * 
+   * @param String
+   */
   public String toString () {
     String content = "";
 

@@ -8,12 +8,12 @@ import java.util.ArrayList;
 
 public class ResourceManager
 {
-    private HTTP http;
+    private HTTPEngine http;
 
     private ArrayList<Resource> resources = new ArrayList<Resource>();
 
     public ResourceManager() {
-      this.http = new HTTP();
+      this.http = new HTTPEngine();
     }
 
     public Resource loadUrl(String url) {
@@ -24,7 +24,7 @@ public class ResourceManager
         return resource;
     }
 
-    public HTTP httpClient() {
+    public HTTPEngine httpClient() {
       return this.http;
     }
 }

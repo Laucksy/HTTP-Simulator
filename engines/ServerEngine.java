@@ -4,6 +4,7 @@ import layers.TransportLayer;
 import helpers.Helper;
 
 import java.util.concurrent.TimeUnit;
+import java.io.File;
 
 public abstract class ServerEngine {
   protected TransportLayer transportLayer;
@@ -35,14 +36,20 @@ public abstract class ServerEngine {
 
   public abstract void load (String version, String uri, byte[] byteArray);
 
-  public String createResponse(String version, int code, String type, String data) {
+  public String createResponse(String version, int code, String type, String data, String uri) {
+    File file = new File("website_example/" + uri);
+
+    System.out.println("website_example/" + uri);
+    System.out.println(file.lastModified());
+
     String msg = "Ok";
     if (code == 404) msg = "Not Found";
     if (code == 304) msg = "Not Modified";
 
     String response = "HTTP/" + version + " " + code + " " + msg + "\n";
     response += "Connection: " + (version.equals("1.1") ? "keep-alive" : "close") + "\n";
-    //TODO: Add Date and Last-Modified
+    response += "Date: " + System.currentTimeMillis() + "\n";
+    response += "Last-Modified: " + file.lastModified() + "\n"; 
     response += "Content-Length: " + data.length() + "\n";
     response += "Content-Type: " + type + "\n";
     response += "\n";

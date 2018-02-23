@@ -16,7 +16,7 @@ public class Server extends ServerEngine {
     int code = fileData.equals("Not Found") ? 404 : 200;
     String data = fileData.equals("Not Found") ? "" : fileData;
 
-    String response = createResponse(version, code, type, data);
+    String response = createResponse(version, code, type, data, uri);
     byteArray = response.getBytes();
     transportLayer.send(byteArray);
   }

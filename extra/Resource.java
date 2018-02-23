@@ -18,7 +18,6 @@ public class Resource
     protected Timestamp requestedDate;
     protected Timestamp loadedDate;
     protected HTTPEngine.HTTPResponse response;
-    protected ArrayList<String> dependencies;
 
     private CLHTEngine clhtEngine;
 
@@ -26,18 +25,6 @@ public class Resource
       this.url = url;
       this.resourceManager = resourceManager;
       this.requestedDate = new Timestamp(System.currentTimeMillis());
-    }
-
-    public ArrayList<String> getDependencies() {
-        switch (this.type) {
-          case "text/clht":
-            ArrayList<String> dependencies = new ArrayList<String>();
-            for (String image : this.clhtEngine.images) {
-              dependencies.add(image);
-            }
-          default:
-            return new ArrayList<String>();
-        }
     }
 
     public void load() {
@@ -52,25 +39,28 @@ public class Resource
       this.loaded = true;
 
       this.type = this.response.getHeader("Content-Type");
-      
-      if (this.type.equals("text/clht"))
-        this.clhtEngine = new CLHTEngine(this.response.data);
 
-      this.dependencies = this.getDependencies();
-      for (String dependency: dependencies) {
-        resourceManager.loadUrl(dependency);
-      }
+      if (this.type.equals("text/clht"))
+        this.clhtEngine = new CLHTEngine(this.resourceManager, this.response.data);
+    }
+
+    public String findLink(int id) {
+      if (this.type.equals("text/clht")
+          && this.clhtEngine != null
+          && this.clhtEngine.findLink(id) != null)
+        return this.clhtEngine.findLink(id).url;
+      else
+        return "home";
     }
 
     public String toString() {
-      return this.render();
+      if (this.type.equals("text/clht"))
+        return this.clhtEngine.render();
+      else
+        return this.response.data;
     }
 
     public HTTPEngine.HTTPResponse getResponse() {
       return this.response;
-    }
-
-    public String render() {
-      return this.clhtEngine.render();
     }
 }

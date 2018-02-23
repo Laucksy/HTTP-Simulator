@@ -35,7 +35,9 @@ public class Browser {
   // Internal components
   private ResourceManager resourceManager = new ResourceManager();
 
-  public Browser() {
+  public Browser() {}
+
+  public void run () {
     renderRoutine();
   }
 

@@ -1,11 +1,12 @@
 package runners;
 
-import layers.Browser;
+import endsystems.Client;
 
 //This class represents the client application
 public class ClientApp {
 
   public static void main(String[] args) {
-    Browser browser = new Browser();
+    Client client = new Client();
+    client.browse();
   }
 }

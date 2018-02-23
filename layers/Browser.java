@@ -10,7 +10,12 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
-//This class represents the client application
+/**
+ * Broswer - Implements the command line interface shown to the user through
+ * the client app.
+ *
+ */
+
 public class Browser {
   // Text colors
   public static final String ANSI_RESET = "\u001B[0m";
@@ -39,25 +44,45 @@ public class Browser {
 
   public Browser() {}
 
+  /*
+    run - runs the browser routine
+  */
   public void run () {
     renderRoutine();
   }
 
+  /*
+    renderRoutine - Constantly checks for URL/href input from the user and
+    renders the page they requested
+  */
   public void renderRoutine() {
+    Scanner sc = new Scanner(System.in);
+
+    // Initial run
     renderPage("home");
     promptForURL();
-    Scanner sc = new Scanner(System.in);
+
+    // Subsequent runs
     while(sc.hasNextLine()) {
       String command = sc.nextLine();
+
+      // Built-in commands
       if (command.equals(""))
         command = "home";
       if (command.equals("exit"))
         System.exit(0);
+
+      // Render the page
       renderPage(command);
+
+      // Ask for a new URL
       promptForURL();
     }
   }
 
+  /*
+    promptForURL - Shows the message that asks user for input
+  */
   public void promptForURL() {
     for (int i = 0; i <= 80; i++) {
       System.out.print("=");
@@ -67,6 +92,9 @@ public class Browser {
     System.out.print("/");
   }
 
+  /*
+    renderPage - Loads and renders the frame around the page
+  */
   public void renderPage(String url) {
       String pageTitle = "";
 
@@ -93,11 +121,12 @@ public class Browser {
       }
       System.out.println();
 
-      if (url.equals("home"))
+      // Render the pages based on their content
+      if (url.equals("home")) // Home page
         renderHome();
-      else if (url.matches("-?\\d+(\\.\\d+)?") && this.currentResource != null)
+      else if (url.matches("-?\\d+(\\.\\d+)?") && this.currentResource != null) // Href
         renderUrl(this.currentResource.findLink(Integer.parseInt(url) - 1));
-      else
+      else // URL
         renderUrl(url);
 
        System.out.println();
@@ -164,9 +193,13 @@ public class Browser {
      System.out.println();
   }
 
+  /*
+    renderPage - Loads and renders the given URL
+  */
   public void renderUrl(String url) {
     Timer timer = new Timer();
 
+    // The loader shows a progress bar as the page loads
     Loader loader = new Loader();
 
     timer.scheduleAtFixedRate(loader, /* initialDelay */ 0, /* interval */ 100);
@@ -191,6 +224,7 @@ public class Browser {
       System.out.println(ANSI_PURPLE + " -> Took Total : " + (end - start) + " millis" + ANSI_RESET);
   }
 
+  // Shows a progress bar
   class Loader extends TimerTask {
     int progress = 0;
 
